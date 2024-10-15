@@ -1,0 +1,2240 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[    100067,       2232]
+NotebookOptionsPosition[     96001,       2161]
+NotebookOutlinePosition[     96429,       2178]
+CellTagsIndexPosition[     96386,       2175]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Backtesting", "Title",
+ CellChangeTimes->{{3.932401147955866*^9, 
+  3.932401150224045*^9}},ExpressionUUID->"45c07c81-22dd-814d-a770-\
+c8beca20e9be"],
+
+Cell[CellGroupData[{
+
+Cell["Parte 1: Importaci\[OAcute]n y Preparaci\[OAcute]n de los Datos", \
+"Subtitle",
+ CellGroupingRules->{"GroupTogetherGrouping", 10000.},
+ CellChangeTimes->{{3.9324011539334717`*^9, 3.932401156756872*^9}, 
+   3.9324020905277023`*^9, 
+   3.9324035464289455`*^9},ExpressionUUID->"5de3f8a8-592b-9945-81fb-\
+6f375bfc3c33"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"chooseLeague", " ", "=", " ", "\"\<iga\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{"chooseLeague", "==", "\"\<La Liga\>\""}], ",", "\n", "\t", 
+    RowBox[{"dfList", " ", "=", " ", 
+     RowBox[{
+     "Import", "[", 
+      "\"\<C:/Users/geral/OneDrive - Universidad del \
+Pac\[IAcute]fico/Trabajos/CMA/data_ligaespana.csv\>\"", "]"}]}], ",", "\n", 
+    "\t", 
+    RowBox[{"dfList", " ", "=", " ", 
+     RowBox[{
+     "Import", "[", 
+      "\"\<C:/Users/geral/OneDrive - Universidad del \
+Pac\[IAcute]fico/Trabajos/CMA/data_ligainglesa.csv\>\"", "]"}]}]}], "\n", 
+   "\t", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"dfAssociation", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"AssociationThread", "[", 
+      RowBox[{
+       RowBox[{"dfList", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "->", "#"}], "]"}], "&"}], "/@", 
+    RowBox[{"Rest", "[", "dfList", "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"dfDataSet", "=", 
+   RowBox[{"Dataset", "[", "dfAssociation", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"dfDataSet", "=", 
+   RowBox[{"dfDataSet", "[", 
+    RowBox[{"All", ",", 
+     RowBox[{
+      RowBox[{"Append", "[", 
+       RowBox[{"#", ",", 
+        RowBox[{"\"\<Total\>\"", "->", 
+         RowBox[{"(", 
+          RowBox[{"#FTHG", "+", "#FTAG"}], ")"}]}]}], "]"}], "&"}]}], "]"}]}],
+   ";"}], "\n", 
+ RowBox[{
+  RowBox[{"dfDataSet", "=", 
+   RowBox[{"dfDataSet", "[", 
+    RowBox[{"All", ",", 
+     RowBox[{
+      RowBox[{"Append", "[", 
+       RowBox[{"#", ",", 
+        RowBox[{"\"\<Difference\>\"", "->", 
+         RowBox[{"(", 
+          RowBox[{"Abs", "[", 
+           RowBox[{"#FTHG", "-", "#FTAG"}], "]"}], ")"}]}]}], "]"}], "&"}]}], 
+    "]"}]}], ";"}]}], "Code",
+ CellGroupingRules->{"GroupTogetherGrouping", 10000.},
+ CellChangeTimes->{{3.932403535277191*^9, 3.9324035464301414`*^9}, {
+   3.933162295118904*^9, 3.9331623129488697`*^9}, {3.933186175678751*^9, 
+   3.9331861761706295`*^9}, 3.9332443195576153`*^9, {3.9333404494407883`*^9, 
+   3.9333404508855476`*^9}, {3.933359739637972*^9, 3.9333597401355705`*^9}},
+ CellLabel->"In[29]:=",ExpressionUUID->"b1a5e0d4-30e7-1941-ae5a-ad4f48478dea"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"dfList", " ", "=", " ", 
+   RowBox[{
+   "Import", "[", 
+    "\"\<C:/Users/geral/OneDrive - Universidad del \
+Pac\[IAcute]fico/Trabajos/CMA/data_ligainglesa.csv\>\"", "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"fechasConvertidas", " ", "=", " ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"DateObject", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"ToExpression", "[", 
+         RowBox[{"StringTake", "[", 
+          RowBox[{"#", ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"7", ",", " ", "10"}], "}"}]}], "]"}], "]"}], ",", " ", 
+        "\n", "                                ", 
+        RowBox[{"ToExpression", "[", 
+         RowBox[{"StringTake", "[", 
+          RowBox[{"#", ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"4", ",", " ", "5"}], "}"}]}], "]"}], "]"}], ",", " ", 
+        "\n", "                                ", 
+        RowBox[{"ToExpression", "[", 
+         RowBox[{"StringTake", "[", 
+          RowBox[{"#", ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", " ", "2"}], "}"}]}], "]"}], "]"}]}], "}"}], 
+      "]"}], " ", "&"}], " ", "/@", " ", "\n", 
+    "                                ", 
+    RowBox[{"(", 
+     RowBox[{"Rest", "[", 
+      RowBox[{"dfList", "[", 
+       RowBox[{"[", 
+        RowBox[{"All", ",", "2"}], "]"}], "]"}], "]"}], ")"}]}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"dateList", " ", "=", " ", 
+   RowBox[{"Prepend", "[", 
+    RowBox[{"fechasConvertidas", ",", "\"\<DateConverted\>\""}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"dfList", " ", "=", " ", 
+   RowBox[{"MapThread", "[", 
+    RowBox[{"Append", ",", 
+     RowBox[{"{", 
+      RowBox[{"dfList", ",", "dateList"}], "}"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"dfAssociation", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"AssociationThread", "[", 
+      RowBox[{
+       RowBox[{"dfList", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "->", "#"}], "]"}], "&"}], "/@", 
+    RowBox[{"Rest", "[", "dfList", "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"dfDataSet", "=", 
+   RowBox[{"Dataset", "[", "dfAssociation", "]"}]}], ";"}]}], "Code",
+ CellGroupingRules->{"GroupTogetherGrouping", 10000.},
+ CellChangeTimes->{3.933556990059704*^9, 3.933557383800644*^9},
+ CellLabel->
+  "In[242]:=",ExpressionUUID->"13273f09-de73-c44d-be2a-fa8c417041ae"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Parte 2: Divisi\[OAcute]n de los Datos en Conjuntos de Entrenamiento y Prueba\
+\>", "Subtitle",
+ CellChangeTimes->{
+  3.9324011906295605`*^9},ExpressionUUID->"1701be5a-7509-1b49-8f44-\
+0431a1c6e575"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Definir", " ", "la", " ", "proporci\[OAcute]n", " ", "de", " ", 
+    "divisi\[OAcute]n"}], " ", "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"trainingProportion", " ", "=", " ", "0.7"}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Calcular", " ", "el", " ", "n\[UAcute]mero", " ", "de", " ", "datos", 
+     " ", "para", " ", "el", " ", "conjunto", " ", "de", " ", 
+     "entrenamiento"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"totalData", " ", "=", " ", 
+     RowBox[{"Length", "[", "dfDataSet", "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"trainingSize", " ", "=", " ", 
+     RowBox[{"Round", "[", 
+      RowBox[{"trainingProportion", " ", "*", " ", "totalData"}], "]"}]}], 
+    ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Mezclar", " ", "los", " ", "datos", " ", "de", " ", "forma", " ", 
+     "aleatoria"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"shuffledData", " ", "=", " ", 
+     RowBox[{"RandomSample", "[", "dfDataSet", "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Dividir", " ", "los", " ", "datos", " ", "en", " ", "conjuntos", " ", 
+     "de", " ", "entrenamiento", " ", "y", " ", "prueba"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"trainingSet", " ", "=", " ", 
+     RowBox[{"Take", "[", 
+      RowBox[{"shuffledData", ",", " ", "trainingSize"}], "]"}]}], ";"}], 
+   "\n", 
+   RowBox[{
+    RowBox[{"testSet", " ", "=", " ", 
+     RowBox[{"Drop", "[", 
+      RowBox[{"shuffledData", ",", " ", "trainingSize"}], "]"}]}], ";"}], 
+   "\n"}]}]], "Code",
+ CellChangeTimes->{3.9324035561924953`*^9, 3.933162623747427*^9, 
+  3.9331629071420517`*^9},
+ CellLabel->"In[40]:=",ExpressionUUID->"c1308362-7e5a-8541-8ff4-6653b2ad6dcb"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Dividir", " ", "los", " ", "datos", " ", "en", " ", "conjuntos", " ", 
+    "de", " ", "entrenamiento", " ", "y", " ", "prueba"}], " ", "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"trainingSet", " ", "=", " ", 
+     RowBox[{"dfDataSet", "[", 
+      RowBox[{"Select", "[", 
+       RowBox[{
+        RowBox[{"#DateConverted", "<=", 
+         RowBox[{"DateObject", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"2023", ",", "01", ",", "01"}], "}"}], ",", 
+           "\"\<Day\>\""}], "]"}]}], "&"}], "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"testSet", " ", "=", " ", 
+     RowBox[{"dfDataSet", "[", 
+      RowBox[{"Select", "[", 
+       RowBox[{
+        RowBox[{"#DateConverted", ">", 
+         RowBox[{"DateObject", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"2023", ",", "01", ",", "01"}], "}"}], ",", 
+           "\"\<Day\>\""}], "]"}]}], "&"}], "]"}], "]"}]}], ";"}]}]}]], "Code",
+ CellChangeTimes->{{3.9335570181992874`*^9, 3.9335570570518723`*^9}},
+ CellLabel->
+  "In[248]:=",ExpressionUUID->"a8b66109-dcb4-2649-b19b-b27a62df9672"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Parte 3: C\[AAcute]lculo del Elo Rating en el Conjunto de Entrenamiento\
+\>", "Subtitle",
+ CellChangeTimes->{
+  3.932401262420948*^9},ExpressionUUID->"f1cc2b77-74ee-c148-93f7-\
+c18c27aa3897"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Inicializar", " ", "par\[AAcute]metros", " ", "ELO"}], " ", 
+   "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"initialElo", " ", "=", " ", "1500"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"kFactor", " ", "=", " ", "10"}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Funci\[OAcute]n", " ", "para", " ", "calcular", " ", "la", " ", 
+     "puntuaci\[OAcute]n", " ", "esperada"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"expectedScore", "[", 
+      RowBox[{"ratingA_", ",", " ", "ratingB_"}], "]"}], " ", ":=", " ", 
+     RowBox[{"1", "/", 
+      RowBox[{"(", 
+       RowBox[{"1", " ", "+", " ", 
+        RowBox[{"10", "^", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"ratingB", " ", "-", " ", "ratingA"}], ")"}], "/", 
+           "400"}], ")"}]}]}], ")"}]}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Funci\[OAcute]n", " ", "para", " ", "actualizar", " ", "la", " ", 
+     "calificaci\[OAcute]n", " ", "ELO"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"updateElo", "[", 
+      RowBox[{"currentRating_", ",", " ", "expected_", ",", " ", "actual_"}], 
+      "]"}], " ", ":=", " ", 
+     RowBox[{"currentRating", " ", "+", " ", 
+      RowBox[{"kFactor", " ", "*", " ", 
+       RowBox[{"(", 
+        RowBox[{"actual", " ", "-", " ", "expected"}], ")"}]}]}]}], ";"}], 
+   "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Inicializar", " ", "diccionario", " ", "de", " ", "calificaciones", " ", 
+     "ELO"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"eloRatings", " ", "=", " ", 
+     RowBox[{"<|", "|>"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Procesar", " ", "cada", " ", "partido", " ", "del", " ", "conjunto", " ",
+      "de", " ", "entrenamiento", " ", "para", " ", "actualizar", " ", "las", 
+     " ", "calificaciones", " ", "ELO"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"trainingSet", "[", 
+     RowBox[{"All", ",", " ", "\n", "  ", 
+      RowBox[{"Function", "[", 
+       RowBox[{"match", ",", " ", "\n", "   ", 
+        RowBox[{"Module", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+           "homeTeam", ",", " ", "awayTeam", ",", " ", "homeGoals", ",", " ", 
+            "awayGoals", ",", " ", "homeRating", ",", " ", "\n", "     ", 
+            "awayRating", ",", " ", "homeExpected", ",", " ", "awayExpected", 
+            ",", " ", "homeActual", ",", " ", "awayActual"}], "}"}], ",", 
+          "\n", "    ", "\n", "    ", 
+          RowBox[{
+           RowBox[{"homeTeam", " ", "=", " ", 
+            RowBox[{"match", "[", "\"\<HomeTeam\>\"", "]"}]}], ";", "\n", 
+           "    ", 
+           RowBox[{"awayTeam", " ", "=", " ", 
+            RowBox[{"match", "[", "\"\<AwayTeam\>\"", "]"}]}], ";", "\n", 
+           "    ", 
+           RowBox[{"homeGoals", " ", "=", " ", 
+            RowBox[{"match", "[", "\"\<FTHG\>\"", "]"}]}], ";", "\n", "    ", 
+           RowBox[{"awayGoals", " ", "=", " ", 
+            RowBox[{"match", "[", "\"\<FTAG\>\"", "]"}]}], ";", "\n", "    ", 
+           "\n", "    ", 
+           RowBox[{"(*", " ", 
+            RowBox[{
+            "Inicializar", " ", "calificaciones", " ", "ELO", " ", "si", " ", 
+             "los", " ", "equipos", " ", "no", " ", "est\[AAcute]n", " ", 
+             "calificados"}], " ", "*)"}], "\n", "    ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{"!", 
+              RowBox[{"KeyExistsQ", "[", 
+               RowBox[{"eloRatings", ",", " ", "homeTeam"}], "]"}]}], ",", 
+             " ", "\n", "     ", 
+             RowBox[{
+              RowBox[{"eloRatings", "[", "homeTeam", "]"}], " ", "=", " ", 
+              "initialElo"}]}], "]"}], ";", "\n", "    ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{"!", 
+              RowBox[{"KeyExistsQ", "[", 
+               RowBox[{"eloRatings", ",", " ", "awayTeam"}], "]"}]}], ",", 
+             " ", "\n", "     ", 
+             RowBox[{
+              RowBox[{"eloRatings", "[", "awayTeam", "]"}], " ", "=", " ", 
+              "initialElo"}]}], "]"}], ";", "\n", "    ", "\n", "    ", 
+           RowBox[{"(*", " ", 
+            RowBox[{"Obtener", " ", "calificaciones", " ", "actuales"}], " ", 
+            "*)"}], "\n", "    ", 
+           RowBox[{"homeRating", " ", "=", " ", 
+            RowBox[{"eloRatings", "[", "homeTeam", "]"}]}], ";", "\n", "    ", 
+           RowBox[{"awayRating", " ", "=", " ", 
+            RowBox[{"eloRatings", "[", "awayTeam", "]"}]}], ";", "\n", "    ",
+            "\n", "    ", 
+           RowBox[{"(*", " ", 
+            RowBox[{"Calcular", " ", "puntuaciones", " ", "esperadas"}], " ", 
+            "*)"}], "\n", "    ", 
+           RowBox[{"homeExpected", " ", "=", " ", 
+            RowBox[{"expectedScore", "[", 
+             RowBox[{"homeRating", ",", " ", "awayRating"}], "]"}]}], ";", 
+           "\n", "    ", 
+           RowBox[{"awayExpected", " ", "=", " ", 
+            RowBox[{"expectedScore", "[", 
+             RowBox[{"awayRating", ",", " ", "homeRating"}], "]"}]}], ";", 
+           "\n", "    ", "\n", "    ", 
+           RowBox[{"(*", " ", 
+            RowBox[{
+            "Determinar", " ", "puntuaciones", " ", "reales", " ", "basadas", 
+             " ", "en", " ", "el", " ", "resultado", " ", "del", " ", 
+             "partido"}], " ", "*)"}], "\n", "    ", 
+           RowBox[{"Which", "[", "\n", "     ", 
+            RowBox[{
+             RowBox[{"homeGoals", " ", ">", " ", "awayGoals"}], ",", " ", 
+             RowBox[{
+              RowBox[{"homeActual", " ", "=", " ", "1"}], ";", " ", 
+              RowBox[{"awayActual", " ", "=", " ", "0"}], ";"}], ",", "\n", 
+             "     ", 
+             RowBox[{"homeGoals", " ", "<", " ", "awayGoals"}], ",", " ", 
+             RowBox[{
+              RowBox[{"homeActual", " ", "=", " ", "0"}], ";", " ", 
+              RowBox[{"awayActual", " ", "=", " ", "1"}], ";"}], ",", "\n", 
+             "     ", "True", ",", " ", 
+             RowBox[{
+              RowBox[{"homeActual", " ", "=", " ", "0.5"}], ";", " ", 
+              RowBox[{"awayActual", " ", "=", " ", "0.5"}]}]}], "\n", "    ", 
+            "]"}], ";", "\n", "    ", "\n", "    ", 
+           RowBox[{"(*", " ", 
+            RowBox[{"Actualizar", " ", "calificaciones"}], " ", "*)"}], "\n", 
+           "    ", 
+           RowBox[{
+            RowBox[{"eloRatings", "[", "homeTeam", "]"}], " ", "=", " ", 
+            RowBox[{"updateElo", "[", 
+             RowBox[{
+             "homeRating", ",", " ", "homeExpected", ",", " ", "homeActual"}],
+              "]"}]}], ";", "\n", "    ", 
+           RowBox[{
+            RowBox[{"eloRatings", "[", "awayTeam", "]"}], " ", "=", " ", 
+            RowBox[{"updateElo", "[", 
+             RowBox[{
+             "awayRating", ",", " ", "awayExpected", ",", " ", "awayActual"}],
+              "]"}]}], ";"}]}], "\n", "    ", "]"}]}], "\n", "   ", "]"}]}], 
+     "]"}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Convertir", " ", "las", " ", "calificaciones", " ", "ELO", " ", 
+     "finales", " ", "a", " ", "una", " ", "lista", " ", "y", " ", 
+     "ordenarlas", " ", "por", " ", "calificaci\[OAcute]n"}], " ", "*)"}], 
+   "\n", 
+   RowBox[{
+    RowBox[{"finalEloRatings", " ", "=", " ", 
+     RowBox[{"SortBy", "[", 
+      RowBox[{
+       RowBox[{"Normal", "[", "eloRatings", "]"}], ",", " ", 
+       RowBox[{
+        RowBox[{"-", 
+         RowBox[{"Last", "[", "#", "]"}]}], " ", "&"}]}], "]"}]}], ";"}], 
+   "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Convertir", " ", "las", " ", "calificaciones", " ", "finales", " ", "a", 
+     " ", "una", " ", "asociaci\[OAcute]n"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"finalEloRatingsAssociation", " ", "=", " ", 
+     RowBox[{"Association", "[", "finalEloRatings", "]"}]}], ";"}], 
+   "\n"}]}]], "Code",
+ CellChangeTimes->{
+  3.9324035673193893`*^9, {3.933163141365591*^9, 3.9331631455514336`*^9}, {
+   3.933340460951683*^9, 3.9333404610148983`*^9}},
+ CellLabel->
+  "In[250]:=",ExpressionUUID->"36326364-c010-6547-ba5a-82d6de0037b4"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Parte 4: Filtrado y C\[AAcute]lculo de Goles Ponderados en el Conjunto de \
+Entrenamiento\
+\>", "Subtitle",
+ CellChangeTimes->{
+  3.932401285520092*^9},ExpressionUUID->"449b96d9-1c03-ec49-adcd-\
+b8205b860f1a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Paso", " ", "5"}], ":", " ", 
+    RowBox[{
+    "Extraer", " ", "los", " ", "goles", " ", "de", " ", "los", " ", 
+     "equipos", " ", "locales", " ", "y", " ", "visitantes", " ", "con", " ", 
+     "sus", " ", "respectivos", " ", "equipos", " ", "para", " ", "el", " ", 
+     "conjunto", " ", "de", " ", "entrenamiento"}]}], " ", "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"dfListxGHomeTeamTraining", " ", "=", " ", 
+     RowBox[{"Rest", "[", 
+      RowBox[{"trainingSet", "[", 
+       RowBox[{"[", 
+        RowBox[{"All", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"4", ",", " ", "6"}], "}"}]}], "]"}], "]"}], "]"}]}], ";"}],
+    " ", 
+   RowBox[{"(*", " ", 
+    RowBox[{"HomeTeam", ",", " ", "FTHG"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"dfListxGAwayTeamTraining", " ", "=", " ", 
+     RowBox[{"Rest", "[", 
+      RowBox[{"trainingSet", "[", 
+       RowBox[{"[", 
+        RowBox[{"All", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"5", ",", " ", "7"}], "}"}]}], "]"}], "]"}], "]"}]}], ";"}],
+    " ", 
+   RowBox[{"(*", " ", 
+    RowBox[{"AwayTeam", ",", " ", "FTAG"}], " ", "*)"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"Paso", " ", "6"}], ":", " ", 
+     RowBox[{
+     "Combinar", " ", "las", " ", "listas", " ", "de", " ", "equipos", " ", 
+      "y", " ", "goles", " ", "para", " ", "el", " ", "conjunto", " ", "de", 
+      " ", "entrenamiento"}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"combinedGoalsTrainingList", " ", "=", " ", 
+     RowBox[{"Join", "[", "\n", "   ", 
+      RowBox[{
+      "dfListxGHomeTeamTraining", ",", "\n", "   ", 
+       "dfListxGAwayTeamTraining"}], "\n", "   ", "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Paso", " ", "7"}], ":", " ", 
+      RowBox[{
+      "Calcular", " ", "el", " ", "promedio", " ", "de", " ", "goles", " ", 
+       "por", " ", "equipo"}]}], ",", " ", 
+     RowBox[{
+     "sin", " ", "diferenciar", " ", "entre", " ", "local", " ", "y", " ", 
+      "visita", " ", "para", " ", "el", " ", "conjunto", " ", "de", " ", 
+      "entrenamiento"}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"averageGoalsTrainingAssociation", " ", "=", " ", 
+     RowBox[{"GroupBy", "[", 
+      RowBox[{"combinedGoalsTrainingList", ",", " ", 
+       RowBox[{"First", " ", "->", " ", "Last"}], ",", " ", "Mean"}], "]"}]}],
+     ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"Paso", " ", "8"}], ":", " ", 
+     RowBox[{
+      RowBox[{"(", "Opcional", ")"}], " ", "Repetir", " ", "para", " ", "el", 
+      " ", "conjunto", " ", "de", " ", "prueba", " ", "si", " ", "es", " ", 
+      "necesario"}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"dfListxGHomeTeamTest", " ", "=", " ", 
+     RowBox[{"Rest", "[", 
+      RowBox[{"testSet", "[", 
+       RowBox[{"[", 
+        RowBox[{"All", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"4", ",", " ", "6"}], "}"}]}], "]"}], "]"}], "]"}]}], ";"}],
+    " ", 
+   RowBox[{"(*", " ", 
+    RowBox[{"HomeTeam", ",", " ", "FTHG"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"dfListxGAwayTeamTest", " ", "=", " ", 
+     RowBox[{"Rest", "[", 
+      RowBox[{"testSet", "[", 
+       RowBox[{"[", 
+        RowBox[{"All", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"5", ",", " ", "7"}], "}"}]}], "]"}], "]"}], "]"}]}], ";"}],
+    " ", 
+   RowBox[{"(*", " ", 
+    RowBox[{"AwayTeam", ",", " ", "FTAG"}], " ", "*)"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{"combinedGoalsTestList", " ", "=", " ", 
+     RowBox[{"Join", "[", "\n", "   ", 
+      RowBox[{
+      "dfListxGHomeTeamTest", ",", "\n", "   ", "dfListxGAwayTeamTest"}], 
+      "\n", "   ", "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{
+    RowBox[{"averageGoalsTestAssociation", " ", "=", " ", 
+     RowBox[{"GroupBy", "[", 
+      RowBox[{"combinedGoalsTestList", ",", " ", 
+       RowBox[{"First", " ", "->", " ", "Last"}], ",", " ", "Mean"}], "]"}]}],
+     ";"}]}]}]], "Code",
+ CellChangeTimes->{{3.933162721824196*^9, 3.933162780992695*^9}, 
+   3.933162866603836*^9, {3.933162916932499*^9, 3.933162959645273*^9}},
+ CellLabel->
+  "In[258]:=",ExpressionUUID->"91f602ba-3d09-1c4b-b937-a0294fc85e42"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Parte 4b: C\[AAcute]lculo de Diferencias y Ajuste Lineal", "Subtitle",
+ CellChangeTimes->{3.932402624103279*^9, 
+  3.9324037470600624`*^9},ExpressionUUID->"5e2939ee-0e31-a648-9db0-\
+5c6242103d33"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Obtener", " ", "la", " ", "lista", " ", "de", " ", "equipos"}], 
+   " ", "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"teams", " ", "=", " ", 
+     RowBox[{"Keys", "[", "finalEloRatingsAssociation", "]"}]}], ";"}], "\n", 
+   "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Generar", " ", "todos", " ", "los", " ", "pares", " ", "\[UAcute]nicos", 
+     " ", "de", " ", "equipos"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"teamPairs", " ", "=", " ", 
+     RowBox[{"Subsets", "[", 
+      RowBox[{"teams", ",", " ", 
+       RowBox[{"{", "2", "}"}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Calcular", " ", "las", " ", "diferencias", " ", "de", " ", "Elo", " ", 
+     "y", " ", "de", " ", "goles", " ", "ponderados"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"differences", " ", "=", " ", "\n", "  ", 
+     RowBox[{"Map", "[", "\n", "    ", 
+      RowBox[{
+       RowBox[{"Function", "[", 
+        RowBox[{
+         RowBox[{"{", "pair", "}"}], ",", "\n", "      ", 
+         RowBox[{"Module", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"team1", " ", "=", " ", 
+              RowBox[{"pair", "[", 
+               RowBox[{"[", "1", "]"}], "]"}]}], ",", " ", 
+             RowBox[{"team2", " ", "=", " ", 
+              RowBox[{"pair", "[", 
+               RowBox[{"[", "2", "]"}], "]"}]}]}], "}"}], ",", "\n", 
+           "        ", 
+           RowBox[{"{", "\n", "          ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"finalEloRatingsAssociation", "[", "team1", "]"}], " ", 
+              "-", " ", 
+              RowBox[{"finalEloRatingsAssociation", "[", "team2", "]"}]}], 
+             ",", "\n", "          ", 
+             RowBox[{
+              RowBox[{"averageGoalsTrainingAssociation", "[", "team1", "]"}], 
+              " ", "-", " ", 
+              RowBox[{
+              "averageGoalsTrainingAssociation", "[", "team2", "]"}]}]}], 
+            "\n", "        ", "}"}]}], "\n", "      ", "]"}]}], "\n", "    ", 
+        "]"}], ",", "\n", "    ", "teamPairs"}], "\n", "  ", "]"}]}], ";"}], 
+   "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Realizar", " ", "el", " ", "ajuste", " ", "lineal", " ", "para", " ", 
+     "predecir", " ", "la", " ", "diferencia", " ", "de", " ", "goles", " ", 
+     "basada", " ", "en", " ", "la", " ", "diferencia", " ", "de", " ", 
+     "Elo"}], " ", "*)"}], "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"modelFit", " ", "=", " ", 
+      RowBox[{"Fit", "[", 
+       RowBox[{"differences", ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", " ", "x"}], "}"}], ",", " ", "x"}], "]"}]}], ";"}],
+     " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"modelFit", " ", "=", " ", 
+     RowBox[{"Fit", "[", 
+      RowBox[{"differences", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"1", ",", " ", "x"}], "}"}], ",", " ", "x"}], "]"}]}], ";"}], 
+   "\n"}]}]], "Code",
+ CellChangeTimes->{
+  3.9324036014618587`*^9, 3.932403975578861*^9, {3.9326714429330482`*^9, 
+   3.9326714641573143`*^9}, {3.932934782198578*^9, 3.9329347830725975`*^9}, {
+   3.933162999441988*^9, 3.9331630004643383`*^9}, {3.933321830537216*^9, 
+   3.933321832485773*^9}},
+ CellLabel->
+  "In[266]:=",ExpressionUUID->"b56b1387-8dca-3543-b2c2-6c20249af815"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Parte 5: Aplicaci\[OAcute]n del Modelo al Conjunto de Prueba", \
+"Subtitle",
+ CellChangeTimes->{
+  3.932401298935919*^9},ExpressionUUID->"cec51deb-155e-b74d-8d53-\
+215b64a6aa4b"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Filtrar", " ", "los", " ", "pares", " ", "de", " ", "equipos", " ", "del",
+     " ", "conjunto", " ", "de", " ", "prueba"}], " ", "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"testTeamPairs", " ", "=", " ", 
+     RowBox[{"testSet", "[", 
+      RowBox[{"All", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"\"\<HomeTeam\>\"", ",", " ", "\"\<AwayTeam\>\""}], "}"}]}], 
+      "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Aplicar", " ", "el", " ", "modelo", " ", "entrenado", " ", "al", " ", 
+     "conjunto", " ", "de", " ", "prueba", " ", "y", " ", "generar", " ", 
+     "la", " ", "tabla", " ", "con", " ", "diferencias", " ", "predichas"}], 
+    " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"adjustedGoalsDataset", " ", "=", " ", "\n", "  ", 
+     RowBox[{"Dataset", "[", "\n", "    ", 
+      RowBox[{"Table", "[", "\n", "      ", 
+       RowBox[{
+        RowBox[{"Module", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+           "team1", ",", " ", "team2", ",", " ", "originalHomeGoals", ",", 
+            " ", "originalAwayGoals", ",", " ", "totalGoals", ",", " ", "\n", 
+            "              ", "eloDifference", ",", " ", 
+            "predictedDifference", ",", " ", "adjustedHomeGoals", ",", " ", 
+            "adjustedAwayGoals"}], "}"}], ",", "\n", "\n", "        ", 
+          RowBox[{"(*", " ", 
+           RowBox[{
+           "Extraer", " ", "los", " ", "nombres", " ", "de", " ", "los", " ", 
+            "equipos"}], " ", "*)"}], "\n", "        ", 
+          RowBox[{
+           RowBox[{"team1", " ", "=", " ", 
+            RowBox[{"testTeamPairs", "[", 
+             RowBox[{"[", 
+              RowBox[{"i", ",", " ", "1"}], "]"}], "]"}]}], ";", "\n", 
+           "        ", 
+           RowBox[{"team2", " ", "=", " ", 
+            RowBox[{"testTeamPairs", "[", 
+             RowBox[{"[", 
+              RowBox[{"i", ",", " ", "2"}], "]"}], "]"}]}], ";", "\n", 
+           "        ", "\n", "        ", 
+           RowBox[{"(*", " ", 
+            RowBox[{
+            "Verificar", " ", "si", " ", "los", " ", "equipos", " ", 
+             "existen", " ", "en", " ", "las", " ", "asociaciones", " ", 
+             "calculadas"}], " ", "*)"}], "\n", "        ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"KeyExistsQ", "[", 
+               RowBox[{"finalEloRatingsAssociation", ",", " ", "team1"}], 
+               "]"}], " ", "&&", " ", 
+              RowBox[{"KeyExistsQ", "[", 
+               RowBox[{"finalEloRatingsAssociation", ",", " ", "team2"}], 
+               "]"}]}], ",", "\n", "          ", "\n", "          ", 
+             RowBox[{"(*", " ", 
+              RowBox[{
+              "Calcular", " ", "la", " ", "diferencia", " ", "de", " ", 
+               "Elo"}], " ", "*)"}], "\n", "          ", 
+             RowBox[{
+              RowBox[{"eloDifference", " ", "=", " ", 
+               RowBox[{
+                RowBox[{"finalEloRatingsAssociation", "[", "team1", "]"}], 
+                " ", "-", " ", 
+                RowBox[{"finalEloRatingsAssociation", "[", "team2", "]"}]}]}],
+               ";", "\n", "          ", "\n", "          ", 
+              RowBox[{"(*", " ", 
+               RowBox[{
+               "Calcular", " ", "la", " ", "diferencia", " ", "predicha", " ",
+                 "de", " ", "goles", " ", "a", " ", "partir", " ", "de", " ", 
+                "la", " ", "diferencia", " ", "de", " ", "Elo"}], " ", "*)"}],
+               "\n", "          ", 
+              RowBox[{"predictedDifference", " ", "=", " ", 
+               RowBox[{"modelFit", " ", "/.", " ", 
+                RowBox[{"x", " ", "->", " ", "eloDifference"}]}]}], ";", "\n",
+               "          ", "\n", "          ", 
+              RowBox[{"(*", " ", 
+               RowBox[{
+               "Calcular", " ", "los", " ", "goles", " ", "originales"}], " ",
+                "*)"}], "\n", "          ", 
+              RowBox[{"originalHomeGoals", " ", "=", " ", 
+               RowBox[{
+               "averageGoalsTrainingAssociation", "[", "team1", "]"}]}], ";", 
+              "\n", "          ", 
+              RowBox[{"originalAwayGoals", " ", "=", " ", 
+               RowBox[{
+               "averageGoalsTrainingAssociation", "[", "team2", "]"}]}], ";", 
+              "\n", "\n", "          ", 
+              RowBox[{"(*", " ", 
+               RowBox[{
+               "Calcular", " ", "el", " ", "total", " ", "de", " ", "goles"}],
+                " ", "*)"}], "\n", "          ", 
+              RowBox[{"totalGoals", " ", "=", " ", 
+               RowBox[{
+               "originalHomeGoals", " ", "+", " ", "originalAwayGoals"}]}], 
+              ";", "\n", "\n", "          ", 
+              RowBox[{"(*", " ", 
+               RowBox[{
+               "Ajustar", " ", "los", " ", "goles", " ", "para", " ", 
+                "reflejar", " ", "la", " ", "diferencia", " ", "predicha"}], 
+               " ", "*)"}], "\n", "          ", 
+              RowBox[{"adjustedHomeGoals", " ", "=", " ", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"totalGoals", " ", "+", " ", "predictedDifference"}],
+                  ")"}], " ", "/", " ", "2"}]}], ";", "\n", "          ", 
+              RowBox[{"adjustedAwayGoals", " ", "=", " ", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"totalGoals", " ", "-", " ", "predictedDifference"}],
+                  ")"}], " ", "/", " ", "2"}]}], ";", "\n", "\n", 
+              "          ", 
+              RowBox[{"(*", " ", 
+               RowBox[{
+               "Retornar", " ", "la", " ", "fila", " ", "de", " ", "datos", 
+                " ", "con", " ", "las", " ", "diferencias", " ", "predichas", 
+                " ", "incluidas"}], " ", "*)"}], "\n", "          ", 
+              RowBox[{"<|", "\n", "            ", 
+               RowBox[{
+                RowBox[{"\"\<Team Pair\>\"", " ", "->", " ", 
+                 RowBox[{"{", 
+                  RowBox[{"team1", ",", " ", "team2"}], "}"}]}], ",", "\n", 
+                "            ", 
+                RowBox[{
+                "\"\<Predicted Goal Difference\>\"", " ", "->", " ", 
+                 "predictedDifference"}], ",", "\n", "            ", 
+                RowBox[{
+                "\"\<Adjusted Home Goals\>\"", " ", "->", " ", 
+                 "adjustedHomeGoals"}], ",", "\n", "            ", 
+                RowBox[{
+                "\"\<Adjusted Away Goals\>\"", " ", "->", " ", 
+                 "adjustedAwayGoals"}]}], "\n", "          ", "|>"}]}], ",", 
+             "\n", "          ", "\n", "          ", 
+             RowBox[{"(*", " ", 
+              RowBox[{
+               RowBox[{
+               "Si", " ", "los", " ", "equipos", " ", "no", " ", "existen", 
+                " ", "en", " ", "las", " ", "asociaciones"}], ",", " ", 
+               RowBox[{"retornar", " ", "nulos"}]}], " ", "*)"}], "\n", 
+             "          ", 
+             RowBox[{"<|", "\n", "            ", 
+              RowBox[{
+               RowBox[{"\"\<Team Pair\>\"", " ", "->", " ", 
+                RowBox[{"{", 
+                 RowBox[{"team1", ",", " ", "team2"}], "}"}]}], ",", "\n", 
+               "            ", 
+               RowBox[{"\"\<Predicted Goal Difference\>\"", " ", "->", " ", 
+                RowBox[{"Missing", "[", "\"\<NotAvailable\>\"", "]"}]}], ",", 
+               "\n", "            ", 
+               RowBox[{"\"\<Adjusted Home Goals\>\"", " ", "->", " ", 
+                RowBox[{"Missing", "[", "\"\<NotAvailable\>\"", "]"}]}], ",", 
+               "\n", "            ", 
+               RowBox[{"\"\<Adjusted Away Goals\>\"", " ", "->", " ", 
+                RowBox[{"Missing", "[", "\"\<NotAvailable\>\"", "]"}]}]}], 
+              "\n", "          ", "|>"}]}], "\n", "        ", "]"}]}]}], "\n",
+          "      ", "]"}], ",", "\n", "      ", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", " ", 
+          RowBox[{"Length", "[", "testTeamPairs", "]"}]}], "}"}]}], "\n", 
+       "    ", "]"}], "\n", "  ", "]"}]}], ";"}], "\n"}]}]], "Code",
+ CellChangeTimes->{
+  3.932403613557556*^9, 3.932671442937334*^9, {3.9331630213787766`*^9, 
+   3.933163022584009*^9}, {3.933359663775524*^9, 3.9333596763656387`*^9}},
+ CellLabel->
+  "In[270]:=",ExpressionUUID->"48550f0d-e7b1-8744-926d-3689741b9eda"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.933163042811472*^9, 3.9331630445754013`*^9}},
+ CellLabel->
+  "In[166]:=",ExpressionUUID->"61bac645-c3a4-4b4e-9b8e-acb86a7961e6"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Parte 6: Evaluaci\[OAcute]n del Modelo usando Handicaps \
+Asi\[AAcute]ticos", "Subtitle",
+ CellChangeTimes->{{3.932403621887562*^9, 
+  3.9324036277084484`*^9}},ExpressionUUID->"b83d3b24-e8d9-d842-9634-\
+24aa5a25ddc8"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Filtrar", " ", "los", " ", "pares", " ", "de", " ", "equipos", " ", "del",
+     " ", "conjunto", " ", "de", " ", "prueba"}], " ", "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"testTeamPairs", " ", "=", " ", 
+     RowBox[{"testSet", "[", 
+      RowBox[{"All", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{
+        "\"\<HomeTeam\>\"", ",", " ", "\"\<AwayTeam\>\"", ",", " ", 
+         "\"\<FTHG\>\"", ",", " ", "\"\<FTAG\>\"", ",", "\"\<Season\>\""}], 
+        "}"}]}], "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{"Inicializar", " ", "variables"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"capitalTotal", " ", "=", " ", "10000"}], ";"}], " ", 
+   RowBox[{"(*", " ", 
+    RowBox[{"Capital", " ", "total", " ", "disponible", " ", "inicial"}], " ",
+     "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"evolucionCapital", " ", "=", " ", 
+     RowBox[{"{", "capitalTotal", "}"}]}], ";"}], " ", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Lista", " ", "para", " ", "rastrear", " ", "la", " ", 
+     "evoluci\[OAcute]n", " ", "del", " ", "capital"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"ganancias", " ", "=", " ", "0"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"perdidas", " ", "=", " ", "0"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"recuperadas", " ", "=", " ", "0"}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"Realizar", " ", "simulaciones"}], ",", " ", 
+     RowBox[{
+     "evaluar", " ", "los", " ", "resultados", " ", "de", " ", "las", " ", 
+      "apuestas", " ", "y", " ", "verificar", " ", "si", " ", "fueron", " ", 
+      "ganadoras"}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"evaluatedMatches", " ", "=", " ", "\n", "  ", 
+     RowBox[{"Table", "[", "\n", "    ", 
+      RowBox[{
+       RowBox[{"Module", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"team1", ",", " ", "team2", ",", " ", 
+           RowBox[{"nsim", " ", "=", " ", "100000"}], ",", " ", "handicap", 
+           ",", " ", "cuota", ",", " ", "\n", "            ", 
+           "adjustedGoalsLocal", ",", " ", "adjustedGoalsAway", ",", " ", 
+           "\n", "            ", "simulatedMatches", ",", " ", "results", ",",
+            " ", "EVResults", ",", " ", "winRate", ",", " ", "pushRate", ",", 
+           " ", "loseRate", ",", " ", "EV", ",", "\n", "            ", 
+           "realResultDifference", ",", " ", "betOutcome", ",", " ", 
+           "dineroGanadoPerdido", ",", " ", "fraccionKelly", ",", " ", 
+           "montoApostado"}], "}"}], ",", "\n", "      ", "\n", "      ", 
+         RowBox[{"(*", " ", 
+          RowBox[{
+          "Extraer", " ", "los", " ", "nombres", " ", "de", " ", "los", " ", 
+           "equipos", " ", "y", " ", "los", " ", "resultados", " ", 
+           "reales"}], " ", "*)"}], "\n", "      ", 
+         RowBox[{
+          RowBox[{"team1", " ", "=", " ", 
+           RowBox[{"testTeamPairs", "[", 
+            RowBox[{"[", 
+             RowBox[{"i", ",", " ", "\"\<HomeTeam\>\""}], "]"}], "]"}]}], ";",
+           "\n", "      ", 
+          RowBox[{"team2", " ", "=", " ", 
+           RowBox[{"testTeamPairs", "[", 
+            RowBox[{"[", 
+             RowBox[{"i", ",", " ", "\"\<AwayTeam\>\""}], "]"}], "]"}]}], ";",
+           "\n", "      ", 
+          RowBox[{"seasonBelong", " ", "=", " ", 
+           RowBox[{"testTeamPairs", "[", 
+            RowBox[{"[", 
+             RowBox[{"i", ",", " ", "\"\<Season\>\""}], "]"}], "]"}]}], ";", 
+          "\n", "      ", 
+          RowBox[{"realHomeGoals", " ", "=", " ", 
+           RowBox[{"testTeamPairs", "[", 
+            RowBox[{"[", 
+             RowBox[{"i", ",", " ", "\"\<FTHG\>\""}], "]"}], "]"}]}], ";", 
+          "\n", "      ", 
+          RowBox[{"realAwayGoals", " ", "=", " ", 
+           RowBox[{"testTeamPairs", "[", 
+            RowBox[{"[", 
+             RowBox[{"i", ",", " ", "\"\<FTAG\>\""}], "]"}], "]"}]}], ";", 
+          "\n", "      ", 
+          RowBox[{"realResultDifference", " ", "=", " ", 
+           RowBox[{"realHomeGoals", " ", "-", " ", "realAwayGoals"}]}], ";", 
+          "\n", "\n", "      ", 
+          RowBox[{"(*", " ", 
+           RowBox[{
+           "Extraer", " ", "el", " ", "handicap", " ", "y", " ", "la", " ", 
+            "cuota", " ", "correspondiente", " ", "de", " ", "la", " ", 
+            "tabla"}], " ", "*)"}], "\n", "      ", 
+          RowBox[{"matchData", " ", "=", " ", 
+           RowBox[{"SelectFirst", "[", 
+            RowBox[{"dfDataSet", ",", " ", "\n", "        ", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"#", "[", "\"\<HomeTeam\>\"", "]"}], " ", "==", " ", 
+                "team1"}], " ", "&&", " ", 
+               RowBox[{
+                RowBox[{"#", "[", "\"\<AwayTeam\>\"", "]"}], " ", "==", " ", 
+                "team2"}]}], " ", "&"}]}], "]"}]}], ";", "\n", "      ", 
+          RowBox[{"handicap", " ", "=", " ", 
+           RowBox[{"matchData", "[", "\"\<AHh\>\"", "]"}]}], ";", "\n", 
+          "      ", 
+          RowBox[{"cuota", " ", "=", " ", 
+           RowBox[{"matchData", "[", "\"\<AvgAHH\>\"", "]"}]}], ";", "\n", 
+          "\n", "      ", 
+          RowBox[{"(*", " ", 
+           RowBox[{
+           "Extraer", " ", "los", " ", "goles", " ", "ajustados", " ", "para",
+             " ", "el", " ", "equipo", " ", "local", " ", "y", " ", 
+            "visitante", " ", "basados", " ", "en", " ", "el", " ", 
+            "modelo"}], " ", "*)"}], "\n", "      ", 
+          RowBox[{"adjustedGoalsLocal", " ", "=", " ", 
+           RowBox[{
+            RowBox[{"adjustedGoalsDataset", "[", "\n", "        ", 
+             RowBox[{
+              RowBox[{"Select", "[", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"#", "[", "\"\<Team Pair\>\"", "]"}], " ", "==", " ", 
+                 RowBox[{"{", 
+                  RowBox[{"team1", ",", " ", "team2"}], "}"}]}], " ", "&"}], 
+               "]"}], ",", " ", "\n", "        ", 
+              "\"\<Adjusted Home Goals\>\""}], "\n", "      ", "]"}], "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}], ";", "\n", "      ", 
+          RowBox[{"adjustedGoalsAway", " ", "=", " ", 
+           RowBox[{
+            RowBox[{"adjustedGoalsDataset", "[", "\n", "        ", 
+             RowBox[{
+              RowBox[{"Select", "[", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"#", "[", "\"\<Team Pair\>\"", "]"}], " ", "==", " ", 
+                 RowBox[{"{", 
+                  RowBox[{"team1", ",", " ", "team2"}], "}"}]}], " ", "&"}], 
+               "]"}], ",", " ", "\n", "        ", 
+              "\"\<Adjusted Away Goals\>\""}], "\n", "      ", "]"}], "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}], ";", "\n", "\n", "      ", 
+          RowBox[{"(*", " ", 
+           RowBox[{
+           "Calcular", " ", "la", " ", "diferencia", " ", "promedio", " ", 
+            "de", " ", "goles", " ", "en", " ", "los", " ", "enfrentamientos",
+             " ", "directos"}], " ", "*)"}], "\n", "      ", 
+          RowBox[{"directEncounters", " ", "=", " ", 
+           RowBox[{"dfDataSet", "[", "\n", "        ", 
+            RowBox[{"Select", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{
+                 RowBox[{"#", "[", "\"\<HomeTeam\>\"", "]"}], " ", "==", " ", 
+                 "team1"}], " ", "&&", " ", 
+                RowBox[{
+                 RowBox[{"#", "[", "\"\<AwayTeam\>\"", "]"}], " ", "==", " ", 
+                 "team2"}]}], " ", "||", " ", "\n", "               ", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"#", "[", "\"\<HomeTeam\>\"", "]"}], " ", "==", " ", 
+                 "team2"}], " ", "&&", " ", 
+                RowBox[{
+                 RowBox[{"#", "[", "\"\<AwayTeam\>\"", "]"}], " ", "==", " ", 
+                 "team1"}]}]}], " ", "&"}], "]"}], "\n", "      ", "]"}]}], 
+          ";", "\n", "      ", 
+          RowBox[{
+          "averageDirectGoalDifference", " ", "=", " ", "\n", "        ", 
+           RowBox[{"Mean", "[", 
+            RowBox[{"directEncounters", "[", 
+             RowBox[{"All", ",", " ", 
+              RowBox[{
+               RowBox[{"Abs", "[", 
+                RowBox[{"#FTHG", " ", "-", " ", "#FTAG"}], "]"}], " ", 
+               "&"}]}], "]"}], "]"}]}], ";", "\n", "\n", "\n", "      ", 
+          RowBox[{"(*", " ", 
+           RowBox[{"Simular", " ", "partidos"}], " ", "*)"}], "\n", "      ", 
+          RowBox[{"simulatedMatches", " ", "=", " ", "\n", "        ", 
+           RowBox[{"Table", "[", "\n", "          ", 
+            RowBox[{
+             RowBox[{"<|", "\n", "            ", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"team1", " ", "<>", " ", "\"\< Goals\>\""}], " ", "->",
+                 " ", 
+                RowBox[{"RandomVariate", "[", 
+                 RowBox[{"PoissonDistribution", "[", 
+                  RowBox[{"adjustedGoalsLocal", "//", "Normal"}], "]"}], 
+                 "]"}]}], ",", "\n", "            ", 
+               RowBox[{
+                RowBox[{"team2", " ", "<>", " ", "\"\< Goals\>\""}], " ", "->",
+                 " ", 
+                RowBox[{"RandomVariate", "[", 
+                 RowBox[{"PoissonDistribution", "[", 
+                  RowBox[{"adjustedGoalsAway", "//", "Normal"}], "]"}], 
+                 "]"}]}]}], "\n", "          ", "|>"}], ",", "\n", 
+             "          ", 
+             RowBox[{"{", "nsim", "}"}]}], "\n", "        ", "]"}]}], ";", 
+          "\n", "\n", "      ", 
+          RowBox[{"(*", " ", 
+           RowBox[{
+           "Calcular", " ", "resultados", " ", "de", " ", "apuestas", " ", 
+            "con", " ", "cada", " ", "handicap"}], " ", "*)"}], "\n", 
+          "      ", 
+          RowBox[{"results", " ", "=", " ", "\n", "        ", 
+           RowBox[{"Module", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+              "winBet", ",", " ", "pushBet", ",", " ", "loseBet", ",", " ", 
+               "totalBet", ",", " ", "halfHandicap"}], "}"}], ",", "\n", 
+             "          ", "\n", "          ", 
+             RowBox[{"(*", " ", 
+              RowBox[{
+               RowBox[{
+               "Si", " ", "el", " ", "h\[AAcute]ndicap", " ", "es", " ", "de",
+                 " ", "cuartos"}], ",", " ", 
+               RowBox[{"dividir", " ", "en", " ", "dos", " ", "apuestas"}]}], 
+              " ", "*)"}], "\n", "          ", 
+             RowBox[{
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"FractionalPart", "[", 
+                   RowBox[{"Abs", "[", "handicap", "]"}], "]"}], " ", "==", 
+                  " ", "0.25"}], " ", "||", " ", 
+                 RowBox[{
+                  RowBox[{"FractionalPart", "[", 
+                   RowBox[{"Abs", "[", "handicap", "]"}], "]"}], " ", "==", 
+                  " ", "0.75"}]}], ",", "\n", "            ", 
+                RowBox[{
+                 RowBox[{"halfHandicap", " ", "=", " ", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"handicap", " ", "+", " ", "0.25"}], ",", " ", 
+                    RowBox[{"handicap", " ", "-", " ", "0.25"}]}], "}"}]}], 
+                 ";", "\n", "            ", "\n", "            ", 
+                 RowBox[{"(*", " ", 
+                  RowBox[{
+                  "Evaluar", " ", "la", " ", "diferencia", " ", "de", " ", 
+                   "goles", " ", "en", " ", "cada", " ", "simulaci\[OAcute]n",
+                    " ", "para", " ", "ambas", " ", "partes", " ", "del", " ",
+                    "h\[AAcute]ndicap"}], " ", "*)"}], "\n", "            ", 
+                 RowBox[{"winBet", " ", "=", " ", "\n", "              ", 
+                  RowBox[{
+                   RowBox[{"Count", "[", 
+                    RowBox[{
+                    "simulatedMatches", ",", " ", "\n", "                ", 
+                    RowBox[{"_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"#", "[", 
+                    RowBox[{"team1", " ", "<>", " ", "\"\< Goals\>\""}], 
+                    "]"}], " ", "-", " ", 
+                    RowBox[{"#", "[", 
+                    RowBox[{"team2", " ", "<>", " ", "\"\< Goals\>\""}], 
+                    "]"}], " ", "+", " ", 
+                    RowBox[{"halfHandicap", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}], " ", ">", " ", "0"}], 
+                    " ", "&"}], ")"}]}]}], "]"}], " ", "+", "\n", 
+                   "              ", 
+                   RowBox[{"Count", "[", 
+                    RowBox[{
+                    "simulatedMatches", ",", " ", "\n", "                ", 
+                    RowBox[{"_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"#", "[", 
+                    RowBox[{"team1", " ", "<>", " ", "\"\< Goals\>\""}], 
+                    "]"}], " ", "-", " ", 
+                    RowBox[{"#", "[", 
+                    RowBox[{"team2", " ", "<>", " ", "\"\< Goals\>\""}], 
+                    "]"}], " ", "+", " ", 
+                    RowBox[{"halfHandicap", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], " ", ">", " ", "0"}], 
+                    " ", "&"}], ")"}]}]}], "]"}]}]}], ";", "\n", 
+                 "                ", "\n", "            ", 
+                 RowBox[{"pushBet", " ", "=", " ", "\n", "              ", 
+                  RowBox[{
+                   RowBox[{"Count", "[", 
+                    RowBox[{
+                    "simulatedMatches", ",", " ", "\n", "                ", 
+                    RowBox[{"_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"#", "[", 
+                    RowBox[{"team1", " ", "<>", " ", "\"\< Goals\>\""}], 
+                    "]"}], " ", "-", " ", 
+                    RowBox[{"#", "[", 
+                    RowBox[{"team2", " ", "<>", " ", "\"\< Goals\>\""}], 
+                    "]"}], " ", "+", " ", 
+                    RowBox[{"halfHandicap", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}], " ", "==", " ", "0"}], 
+                    " ", "&"}], ")"}]}]}], "]"}], " ", "+", "\n", 
+                   "              ", 
+                   RowBox[{"Count", "[", 
+                    RowBox[{
+                    "simulatedMatches", ",", " ", "\n", "                ", 
+                    RowBox[{"_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"#", "[", 
+                    RowBox[{"team1", " ", "<>", " ", "\"\< Goals\>\""}], 
+                    "]"}], " ", "-", " ", 
+                    RowBox[{"#", "[", 
+                    RowBox[{"team2", " ", "<>", " ", "\"\< Goals\>\""}], 
+                    "]"}], " ", "+", " ", 
+                    RowBox[{"halfHandicap", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], " ", "==", " ", "0"}], 
+                    " ", "&"}], ")"}]}]}], "]"}]}]}], ";", "\n", 
+                 "                ", "\n", "            ", 
+                 RowBox[{"loseBet", " ", "=", " ", "\n", "              ", 
+                  RowBox[{
+                   RowBox[{"Count", "[", 
+                    RowBox[{
+                    "simulatedMatches", ",", " ", "\n", "                ", 
+                    RowBox[{"_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"#", "[", 
+                    RowBox[{"team1", " ", "<>", " ", "\"\< Goals\>\""}], 
+                    "]"}], " ", "-", " ", 
+                    RowBox[{"#", "[", 
+                    RowBox[{"team2", " ", "<>", " ", "\"\< Goals\>\""}], 
+                    "]"}], " ", "+", " ", 
+                    RowBox[{"halfHandicap", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}], " ", "<", " ", "0"}], 
+                    " ", "&"}], ")"}]}]}], "]"}], " ", "+", "\n", 
+                   "              ", 
+                   RowBox[{"Count", "[", 
+                    RowBox[{
+                    "simulatedMatches", ",", " ", "\n", "                ", 
+                    RowBox[{"_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"#", "[", 
+                    RowBox[{"team1", " ", "<>", " ", "\"\< Goals\>\""}], 
+                    "]"}], " ", "-", " ", 
+                    RowBox[{"#", "[", 
+                    RowBox[{"team2", " ", "<>", " ", "\"\< Goals\>\""}], 
+                    "]"}], " ", "+", " ", 
+                    RowBox[{"halfHandicap", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], " ", "<", " ", "0"}], 
+                    " ", "&"}], ")"}]}]}], "]"}]}]}], ";"}], "\n", 
+                "            ", ",", "\n", "            ", 
+                RowBox[{"(*", " ", 
+                 RowBox[{
+                  RowBox[{
+                  "Si", " ", "no", " ", "es", " ", "de", " ", "cuartos"}], 
+                  ",", " ", 
+                  RowBox[{"manejar", " ", "como", " ", "antes"}]}], " ", 
+                 "*)"}], "\n", "            ", 
+                RowBox[{
+                 RowBox[{"winBet", " ", "=", " ", 
+                  RowBox[{"Count", "[", 
+                   RowBox[{
+                   "simulatedMatches", ",", " ", "\n", "              ", 
+                    RowBox[{"_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"#", "[", 
+                    RowBox[{"team1", " ", "<>", " ", "\"\< Goals\>\""}], 
+                    "]"}], " ", "-", " ", 
+                    RowBox[{"#", "[", 
+                    RowBox[{"team2", " ", "<>", " ", "\"\< Goals\>\""}], 
+                    "]"}], " ", "+", " ", "handicap"}], " ", ">", " ", "0"}], 
+                    " ", "&"}], ")"}]}]}], "]"}]}], ";", "\n", "            ", 
+                 RowBox[{"pushBet", " ", "=", " ", 
+                  RowBox[{"Count", "[", 
+                   RowBox[{
+                   "simulatedMatches", ",", " ", "\n", "              ", 
+                    RowBox[{"_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"#", "[", 
+                    RowBox[{"team1", " ", "<>", " ", "\"\< Goals\>\""}], 
+                    "]"}], " ", "-", " ", 
+                    RowBox[{"#", "[", 
+                    RowBox[{"team2", " ", "<>", " ", "\"\< Goals\>\""}], 
+                    "]"}], " ", "+", " ", "handicap"}], " ", "==", " ", "0"}],
+                     " ", "&"}], ")"}]}]}], "]"}]}], ";", "\n", 
+                 "            ", 
+                 RowBox[{"loseBet", " ", "=", " ", 
+                  RowBox[{"Count", "[", 
+                   RowBox[{
+                   "simulatedMatches", ",", " ", "\n", "              ", 
+                    RowBox[{"_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"#", "[", 
+                    RowBox[{"team1", " ", "<>", " ", "\"\< Goals\>\""}], 
+                    "]"}], " ", "-", " ", 
+                    RowBox[{"#", "[", 
+                    RowBox[{"team2", " ", "<>", " ", "\"\< Goals\>\""}], 
+                    "]"}], " ", "+", " ", "handicap"}], " ", "<", " ", "0"}], 
+                    " ", "&"}], ")"}]}]}], "]"}]}], ";"}]}], "\n", 
+               "          ", "]"}], ";", "\n", "          ", "\n", 
+              "          ", 
+              RowBox[{"totalBet", " ", "=", " ", 
+               RowBox[{
+               "winBet", " ", "+", " ", "pushBet", " ", "+", " ", 
+                "loseBet"}]}], ";", "\n", "          ", "\n", "          ", 
+              RowBox[{"<|", 
+               RowBox[{
+                RowBox[{"\"\<Handicap\>\"", " ", "->", " ", "handicap"}], ",",
+                 " ", "\n", "            ", 
+                RowBox[{"\"\<Win Rate\>\"", " ", "->", " ", 
+                 RowBox[{"winBet", "/", "totalBet"}]}], ",", "\n", 
+                "            ", 
+                RowBox[{"\"\<Push Rate\>\"", " ", "->", " ", 
+                 RowBox[{"pushBet", "/", "totalBet"}]}], ",", " ", "\n", 
+                "            ", 
+                RowBox[{"\"\<Lose Rate\>\"", " ", "->", " ", 
+                 RowBox[{"loseBet", "/", "totalBet"}]}]}], "|>"}]}]}], "\n", 
+            "        ", "]"}]}], ";", "\n", "\n", "      ", 
+          RowBox[{"(*", " ", 
+           RowBox[{
+           "Calcular", " ", "valor", " ", "esperado", " ", "para", " ", 
+            "cada", " ", "handicap"}], " ", "*)"}], "\n", "      ", 
+          RowBox[{"EVResults", " ", "=", " ", "\n", "        ", 
+           RowBox[{"Module", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+              "winRate", ",", " ", "pushRate", ",", " ", "loseRate", ",", " ",
+                "EV", ",", " ", "pAjustada", ",", " ", "qAjustada", ",", " ", 
+               "b"}], "}"}], ",", "\n", "          ", "\n", "          ", 
+             RowBox[{"(*", " ", 
+              RowBox[{
+              "Extraer", " ", "los", " ", "valores", " ", "de", " ", "las", 
+               " ", "tasas", " ", "de", " ", "\[EAcute]xito"}], " ", "*)"}], 
+             "\n", "          ", 
+             RowBox[{
+              RowBox[{"winRate", " ", "=", " ", 
+               RowBox[{"results", "[", "\"\<Win Rate\>\"", "]"}]}], ";", "\n",
+               "          ", 
+              RowBox[{"pushRate", " ", "=", " ", 
+               RowBox[{"results", "[", "\"\<Push Rate\>\"", "]"}]}], ";", 
+              "\n", "          ", 
+              RowBox[{"loseRate", " ", "=", " ", 
+               RowBox[{"results", "[", "\"\<Lose Rate\>\"", "]"}]}], ";", 
+              "\n", "          ", "\n", "          ", 
+              RowBox[{"(*", " ", 
+               RowBox[{"Ajustar", " ", "las", " ", "probabilidades"}], " ", 
+               "*)"}], "\n", "          ", 
+              RowBox[{"pAjustada", " ", "=", " ", 
+               RowBox[{"winRate", " ", "/", " ", 
+                RowBox[{"(", 
+                 RowBox[{"1", " ", "-", " ", "pushRate"}], ")"}]}]}], ";", 
+              "\n", "          ", 
+              RowBox[{"qAjustada", " ", "=", " ", 
+               RowBox[{"loseRate", " ", "/", " ", 
+                RowBox[{"(", 
+                 RowBox[{"1", " ", "-", " ", "pushRate"}], ")"}]}]}], ";", 
+              "\n", "          ", "\n", "          ", 
+              RowBox[{"(*", " ", 
+               RowBox[{"Calcular", " ", "el", " ", "valor", " ", "esperado"}],
+                " ", "*)"}], "\n", "          ", 
+              RowBox[{"b", " ", "=", " ", 
+               RowBox[{"cuota", " ", "-", " ", "1"}]}], ";", "\n", 
+              "          ", 
+              RowBox[{"EV", " ", "=", " ", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"winRate", " ", "*", " ", "cuota"}], ")"}], " ", "+",
+                 " ", 
+                RowBox[{"(", 
+                 RowBox[{"pushRate", " ", "*", " ", "1"}], ")"}], " ", "-", 
+                " ", 
+                RowBox[{"(", 
+                 RowBox[{"loseRate", " ", "*", " ", "1"}], ")"}]}]}], ";", 
+              "\n", "          ", "\n", "          ", 
+              RowBox[{"(*", " ", 
+               RowBox[{
+               "Calcular", " ", "la", " ", "fracci\[OAcute]n", " ", "de", " ",
+                 "Kelly"}], " ", "*)"}], "\n", "          ", 
+              RowBox[{"fraccionKelly", " ", "=", " ", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"b", " ", "*", " ", "pAjustada"}], " ", "-", " ", 
+                  "qAjustada"}], ")"}], " ", "/", " ", "b"}]}], ";", "\n", 
+              "          ", "\n", "          ", 
+              RowBox[{"(*", " ", 
+               RowBox[{"Evitar", " ", "fracciones", " ", "negativas"}], " ", 
+               "*)"}], "\n", "          ", 
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{"fraccionKelly", " ", "<", " ", "0"}], ",", " ", 
+                RowBox[{"fraccionKelly", " ", "=", " ", "0"}]}], "]"}], ";", 
+              "\n", "          ", "\n", "          ", 
+              RowBox[{"<|", 
+               RowBox[{
+                RowBox[{"\"\<Handicap\>\"", " ", "->", " ", "handicap"}], ",",
+                 "\n", "            ", 
+                RowBox[{"\"\<Cuota\>\"", " ", "->", " ", "cuota"}], ",", "\n",
+                 "            ", 
+                RowBox[{"\"\<Win Rate\>\"", " ", "->", " ", "winRate"}], ",", 
+                " ", "\n", "            ", 
+                RowBox[{"\"\<Push Rate\>\"", " ", "->", " ", "pushRate"}], 
+                ",", " ", "\n", "            ", 
+                RowBox[{"\"\<Lose Rate\>\"", " ", "->", " ", "loseRate"}], 
+                ",", "\n", "            ", 
+                RowBox[{"\"\<Expected Value (EV)\>\"", " ", "->", " ", "EV"}],
+                 ",", "\n", "            ", 
+                RowBox[{
+                "\"\<Fraccion Kelly\>\"", " ", "->", " ", "fraccionKelly"}]}],
+                "|>"}]}]}], "\n", "        ", "]"}]}], ";", "\n", "\n", 
+          "      ", 
+          RowBox[{"(*", " ", 
+           RowBox[{
+           "Calcular", " ", "el", " ", "monto", " ", "a", " ", "apostar", " ",
+             "basado", " ", "en", " ", "la", " ", "fracci\[OAcute]n", " ", 
+            "de", " ", "Kelly"}], " ", "*)"}], "\n", "      ", 
+          RowBox[{"montoApostado", " ", "=", " ", 
+           RowBox[{"fraccionKelly", " ", "*", " ", "capitalTotal"}]}], ";", 
+          "\n", "      ", "\n", "      ", 
+          RowBox[{"(*", " ", 
+           RowBox[{
+            RowBox[{
+            "Verificar", " ", "si", " ", "los", " ", "criterios", " ", "se", 
+             " ", "cumplen"}], ",", " ", 
+            RowBox[{"incluyendo", " ", "el", " ", "nuevo", " ", "filtro"}]}], 
+           " ", "*)"}], "\n", "      ", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"EVResults", "[", "\"\<Win Rate\>\"", "]"}], " ", "+",
+                 " ", 
+                RowBox[{"EVResults", "[", "\"\<Push Rate\>\"", "]"}]}], " ", 
+               ">", " ", "0.7"}], ")"}], " ", "&&", " ", "\n", "         ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"EVResults", "[", "\"\<Expected Value (EV)\>\"", "]"}],
+                " ", ">", " ", "0.8"}], ")"}], " ", "&&", "\n", "         ", 
+             RowBox[{"(", 
+              RowBox[{"averageDirectGoalDifference", " ", "<=", " ", 
+               RowBox[{"Abs", "[", "handicap", "]"}]}], ")"}]}], ",", "\n", 
+            "        ", "\n", "        ", 
+            RowBox[{
+             RowBox[{"betOutcome", " ", "=", " ", 
+              RowBox[{"Which", "[", "\n", "        ", 
+               RowBox[{"(*", " ", 
+                RowBox[{
+                 RowBox[{
+                 "Si", " ", "el", " ", "h\[AAcute]ndicap", " ", "es", " ", 
+                  "de", " ", "cuartos"}], ",", " ", 
+                 RowBox[{
+                 "dividir", " ", "en", " ", "dos", " ", "partes", " ", "y", 
+                  " ", "evaluar", " ", "cada", " ", "una"}]}], " ", "*)"}], 
+               "\n", "        ", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"FractionalPart", "[", 
+                   RowBox[{"Abs", "[", "handicap", "]"}], "]"}], " ", "==", 
+                  " ", "0.25"}], " ", "||", " ", 
+                 RowBox[{
+                  RowBox[{"FractionalPart", "[", 
+                   RowBox[{"Abs", "[", "handicap", "]"}], "]"}], " ", "==", 
+                  " ", "0.75"}]}], ",", "\n", "        ", 
+                RowBox[{"Module", "[", 
+                 RowBox[{
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"halfHandicap", " ", "=", " ", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"handicap", " ", "+", " ", "0.25"}], ",", " ", 
+                    RowBox[{"handicap", " ", "-", " ", "0.25"}]}], "}"}]}], 
+                    ",", " ", "outcome1", ",", " ", "outcome2"}], "}"}], ",", 
+                  "\n", "\t        ", 
+                  RowBox[{
+                   RowBox[{"outcome1", " ", "=", " ", 
+                    RowBox[{"Which", "[", "\n", "\t\t        ", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"realResultDifference", " ", "+", " ", 
+                    RowBox[{"halfHandicap", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}], " ", ">", " ", "0"}], 
+                    ",", " ", "\"\<Ganada\>\"", ",", "\n", "\t\t        ", 
+                    RowBox[{
+                    RowBox[{"realResultDifference", " ", "+", " ", 
+                    RowBox[{"halfHandicap", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}], " ", "==", " ", "0"}], 
+                    ",", " ", "\"\<Anulada\>\"", ",", "\n", "\t\t        ", 
+                    RowBox[{
+                    RowBox[{"realResultDifference", " ", "+", " ", 
+                    RowBox[{"halfHandicap", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}], " ", "<", " ", "0"}], 
+                    ",", " ", "\"\<Perdida\>\""}], "\n", "\t        ", 
+                    "]"}]}], ";", "\n", "\t        ", 
+                   RowBox[{"outcome2", " ", "=", " ", 
+                    RowBox[{"Which", "[", "\n", "\t\t        ", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"realResultDifference", " ", "+", " ", 
+                    RowBox[{"halfHandicap", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], " ", ">", " ", "0"}], 
+                    ",", " ", "\"\<Ganada\>\"", ",", "\n", "\t\t        ", 
+                    RowBox[{
+                    RowBox[{"realResultDifference", " ", "+", " ", 
+                    RowBox[{"halfHandicap", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], " ", "==", " ", "0"}], 
+                    ",", " ", "\"\<Anulada\>\"", ",", "\n", "\t\t        ", 
+                    RowBox[{
+                    RowBox[{"realResultDifference", " ", "+", " ", 
+                    RowBox[{"halfHandicap", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], " ", "<", " ", "0"}], 
+                    ",", " ", "\"\<Perdida\>\""}], "\n", "\t        ", 
+                    "]"}]}], ";", "\n", "\t        ", "\n", "\t        ", 
+                   RowBox[{"(*", " ", 
+                    RowBox[{
+                    "Determinar", " ", "el", " ", "resultado", " ", 
+                    "combinado"}], " ", "*)"}], "\n", "\t        ", 
+                   RowBox[{"Which", "[", "\n", "\t\t        ", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"outcome1", " ", "==", " ", "\"\<Ganada\>\""}], 
+                    " ", "&&", " ", 
+                    RowBox[{"outcome2", " ", "==", " ", "\"\<Ganada\>\""}]}], 
+                    ",", "\n", "\t\t        ", 
+                    RowBox[{
+                    RowBox[{"dineroGanadoPerdido", " ", "=", " ", 
+                    RowBox[{"montoApostado", " ", "*", " ", 
+                    RowBox[{"(", 
+                    RowBox[{"cuota", " ", "-", " ", "1"}], ")"}]}]}], ";", 
+                    " ", 
+                    RowBox[{
+                    "ganancias", " ", "+=", " ", "dineroGanadoPerdido"}], ";",
+                     " ", "\"\<Ganada\>\""}], ",", "\n", "\t\t        ", "\n",
+                     "\t\t        ", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"outcome1", " ", "==", " ", "\"\<Ganada\>\""}], 
+                    " ", "&&", " ", 
+                    RowBox[{"outcome2", " ", "==", " ", "\"\<Anulada\>\""}]}],
+                     ")"}], " ", "||", " ", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"outcome1", " ", "==", " ", "\"\<Anulada\>\""}], 
+                    " ", "&&", " ", 
+                    RowBox[{"outcome2", " ", "==", " ", "\"\<Ganada\>\""}]}], 
+                    ")"}]}], ",", "\n", "\t\t        ", 
+                    RowBox[{
+                    RowBox[{"dineroGanadoPerdido", " ", "=", " ", 
+                    RowBox[{"montoApostado", " ", "*", " ", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{"cuota", " ", "-", " ", "1"}], ")"}], " ", "/", 
+                    " ", "2"}]}]}], ";", " ", 
+                    RowBox[{
+                    "ganancias", " ", "+=", " ", "dineroGanadoPerdido"}], ";",
+                     " ", 
+                    RowBox[{"recuperadas", " ", "+=", " ", 
+                    RowBox[{"montoApostado", " ", "/", " ", "2"}]}], ";", 
+                    " ", "\"\<Media Ganada\>\""}], ",", "\n", "\t\t        ", 
+                    "\n", "\t\t        ", 
+                    RowBox[{
+                    RowBox[{"outcome1", " ", "==", " ", "\"\<Anulada\>\""}], 
+                    " ", "&&", " ", 
+                    RowBox[{"outcome2", " ", "==", " ", "\"\<Anulada\>\""}]}],
+                     ",", "\n", "\t\t        ", 
+                    RowBox[{
+                    RowBox[{"dineroGanadoPerdido", " ", "=", " ", "0"}], ";", 
+                    " ", 
+                    RowBox[{"recuperadas", " ", "+=", " ", "montoApostado"}], 
+                    ";", " ", "\"\<Anulada\>\""}], ",", "\n", "\t\t        ", 
+                    "\n", "\t\t        ", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"outcome1", " ", "==", " ", "\"\<Perdida\>\""}], 
+                    " ", "&&", " ", 
+                    RowBox[{"outcome2", " ", "==", " ", "\"\<Anulada\>\""}]}],
+                     ")"}], " ", "||", " ", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"outcome1", " ", "==", " ", "\"\<Anulada\>\""}], 
+                    " ", "&&", " ", 
+                    RowBox[{"outcome2", " ", "==", " ", "\"\<Perdida\>\""}]}],
+                     ")"}]}], ",", "\n", "\t\t        ", 
+                    RowBox[{
+                    RowBox[{"dineroGanadoPerdido", " ", "=", " ", 
+                    RowBox[{
+                    RowBox[{"-", "montoApostado"}], " ", "/", " ", "2"}]}], 
+                    ";", " ", 
+                    RowBox[{"perdidas", " ", "+=", " ", 
+                    RowBox[{"-", "dineroGanadoPerdido"}]}], ";", " ", 
+                    RowBox[{"recuperadas", " ", "+=", " ", 
+                    RowBox[{"montoApostado", " ", "/", " ", "2"}]}], ";", 
+                    " ", "\"\<Media Perdida\>\""}], ",", "\n", "\t\t        ",
+                     "\n", "\t\t        ", 
+                    RowBox[{
+                    RowBox[{"outcome1", " ", "==", " ", "\"\<Perdida\>\""}], 
+                    " ", "&&", " ", 
+                    RowBox[{"outcome2", " ", "==", " ", "\"\<Perdida\>\""}]}],
+                     ",", "\n", "\t\t        ", 
+                    RowBox[{
+                    RowBox[{"dineroGanadoPerdido", " ", "=", " ", 
+                    RowBox[{"-", "montoApostado"}]}], ";", " ", 
+                    RowBox[{"perdidas", " ", "+=", " ", 
+                    RowBox[{"-", "dineroGanadoPerdido"}]}], ";", " ", 
+                    "\"\<Perdida\>\""}]}], "\n", "\t\t        ", "]"}]}]}], 
+                 "\n", "\t     ", "]"}], ",", "\n", "\t     ", 
+                RowBox[{"(*", " ", 
+                 RowBox[{
+                  RowBox[{
+                  "Si", " ", "el", " ", "h\[AAcute]ndicap", " ", "no", " ", 
+                   "es", " ", "de", " ", "cuartos"}], ",", " ", 
+                  RowBox[{"manejar", " ", "como", " ", "antes"}]}], " ", 
+                 "*)"}], "\n", "\t     ", 
+                RowBox[{
+                 RowBox[{"realResultDifference", " ", "+", " ", "handicap"}], 
+                 " ", ">", " ", "0"}], ",", "\n", "\t     ", 
+                RowBox[{
+                 RowBox[{"dineroGanadoPerdido", " ", "=", " ", 
+                  RowBox[{"montoApostado", " ", "*", " ", 
+                   RowBox[{"(", 
+                    RowBox[{"cuota", " ", "-", " ", "1"}], ")"}]}]}], ";", 
+                 " ", 
+                 RowBox[{"ganancias", " ", "+=", " ", "dineroGanadoPerdido"}],
+                  ";", " ", "\"\<Ganada\>\""}], ",", "\n", "\t     ", "\n", 
+                "\t     ", 
+                RowBox[{
+                 RowBox[{"realResultDifference", " ", "+", " ", "handicap"}], 
+                 " ", "==", " ", "0"}], ",", "\n", "\t     ", 
+                RowBox[{
+                 RowBox[{"dineroGanadoPerdido", " ", "=", " ", "0"}], ";", 
+                 " ", 
+                 RowBox[{"recuperadas", " ", "+=", " ", "montoApostado"}], 
+                 ";", " ", "\"\<Anulada\>\""}], ",", "\n", "\t     ", "\n", 
+                "\t     ", 
+                RowBox[{
+                 RowBox[{"realResultDifference", " ", "+", " ", "handicap"}], 
+                 " ", "<", " ", "0"}], ",", "\n", "\t     ", 
+                RowBox[{
+                 RowBox[{"dineroGanadoPerdido", " ", "=", " ", 
+                  RowBox[{"-", "montoApostado"}]}], ";", " ", 
+                 RowBox[{"perdidas", " ", "+=", " ", 
+                  RowBox[{"-", "dineroGanadoPerdido"}]}], ";", " ", 
+                 "\"\<Perdida\>\""}]}], "\n", "\t     ", "]"}]}], ";", "\n", 
+             "\n", "        ", 
+             RowBox[{"(*", " ", 
+              RowBox[{"Actualizar", " ", "el", " ", "capital", " ", "total"}],
+               " ", "*)"}], "\n", "        ", 
+             RowBox[{"capitalTotal", " ", "+=", " ", "dineroGanadoPerdido"}], 
+             ";", "\n", "        ", "\n", "        ", 
+             RowBox[{"(*", " ", 
+              RowBox[{
+              "Registrar", " ", "la", " ", "evoluci\[OAcute]n", " ", "del", 
+               " ", "capital"}], " ", "*)"}], "\n", "        ", 
+             RowBox[{"AppendTo", "[", 
+              RowBox[{"evolucionCapital", ",", " ", "capitalTotal"}], "]"}], 
+             ";", "\n", "        ", "\n", "        ", 
+             RowBox[{"(*", " ", 
+              RowBox[{
+              "Imprimir", " ", "el", " ", "resultado", " ", "de", " ", "la", 
+               " ", "apuesta"}], " ", "*)"}], "\n", "        ", 
+             RowBox[{"Print", "[", 
+              RowBox[{
+              "\"\<Partido: \>\"", ",", " ", "team1", ",", " ", 
+               "\"\< vs \>\"", ",", " ", "team2", ",", " ", "\n", 
+               "              ", "\"\< | Resultado: \>\"", ",", " ", 
+               "realHomeGoals", ",", " ", "\"\<-\>\"", ",", " ", 
+               "realAwayGoals", ",", "\n", "              ", 
+               "\"\< | Apuesta: \>\"", ",", " ", "betOutcome", ",", " ", "\n",
+                "              ", "\"\< | Dinero ganado/perdido: \>\"", ",", 
+               " ", "dineroGanadoPerdido", ",", "\n", "              ", 
+               "\"\< | Monto Apostado: \>\"", ",", " ", "montoApostado", ",", 
+               "\n", "              ", "\"\< | Capital Total: \>\"", ",", " ",
+                "capitalTotal"}], "]"}], ";", "\n", "        ", "\n", 
+             "\t        ", 
+             RowBox[{"<|", 
+              RowBox[{
+               RowBox[{"\"\<Team Pair\>\"", " ", "->", " ", 
+                RowBox[{"{", 
+                 RowBox[{"team1", ",", " ", "team2"}], "}"}]}], ",", "\n", 
+               "\t          ", 
+               RowBox[{"\"\<Temporada\>\"", " ", "->", " ", "seasonBelong"}], 
+               ",", "\n", "\t          ", 
+               RowBox[{"\"\<Apuesta Realizada\>\"", " ", "->", " ", "True"}], 
+               ",", "\n", "\t          ", 
+               RowBox[{
+               "\"\<Local Goals\>\"", " ", "->", " ", "realHomeGoals"}], ",", 
+               "\n", "\t          ", 
+               RowBox[{
+               "\"\<Away Goals\>\"", " ", "->", " ", "realAwayGoals"}], ",", 
+               "\n", "\t          ", 
+               RowBox[{"\"\<Handicap\>\"", " ", "->", " ", 
+                RowBox[{"EVResults", "[", "\"\<Handicap\>\"", "]"}]}], ",", 
+               "\n", "\t          ", 
+               RowBox[{"\"\<Cuota\>\"", " ", "->", " ", 
+                RowBox[{"EVResults", "[", "\"\<Cuota\>\"", "]"}]}], ",", "\n",
+                "\t          ", 
+               RowBox[{"\"\<Win Rate\>\"", " ", "->", " ", 
+                RowBox[{"EVResults", "[", "\"\<Win Rate\>\"", "]"}]}], ",", 
+               "\n", "\t          ", 
+               RowBox[{"\"\<Push Rate\>\"", " ", "->", " ", 
+                RowBox[{"EVResults", "[", "\"\<Push Rate\>\"", "]"}]}], ",", 
+               "\n", "\t          ", 
+               RowBox[{"\"\<Prob handicap\>\"", "->", " ", 
+                RowBox[{
+                 RowBox[{"EVResults", "[", "\"\<Win Rate\>\"", "]"}], " ", 
+                 "+", " ", 
+                 RowBox[{"EVResults", "[", "\"\<Push Rate\>\"", "]"}]}]}], 
+               ",", "\n", "\t          ", 
+               RowBox[{"\"\<Expected Value (EV)\>\"", " ", "->", " ", 
+                RowBox[{
+                "EVResults", "[", "\"\<Expected Value (EV)\>\"", "]"}]}], ",",
+                "\n", "\t          ", 
+               RowBox[{
+               "\"\<Diff Goles Prom\>\"", " ", "->", " ", 
+                "averageDirectGoalDifference"}], ",", "\n", "\t          ", 
+               RowBox[{"\"\<Fraccion Kelly\>\"", " ", "->", " ", 
+                RowBox[{"EVResults", "[", "\"\<Fraccion Kelly\>\"", "]"}]}], 
+               ",", "\n", "\t          ", 
+               RowBox[{
+               "\"\<Monto Apostado\>\"", " ", "->", " ", "montoApostado"}], 
+               ",", "\n", "\t          ", 
+               RowBox[{
+               "\"\<Resultado Apuesta\>\"", " ", "->", " ", "betOutcome"}], 
+               ",", "\n", "\t          ", 
+               RowBox[{
+               "\"\<Dinero Ganado/Perdido\>\"", " ", "->", " ", 
+                "dineroGanadoPerdido"}], ",", "\n", "\t          ", 
+               RowBox[{
+               "\"\<Capital Despu\[EAcute]s de Apuesta\>\"", " ", "->", " ", 
+                "capitalTotal"}]}], "|>"}]}], ",", "\n", "\t        ", 
+            RowBox[{"(*", " ", 
+             RowBox[{
+              RowBox[{
+              "Si", " ", "no", " ", "cumple", " ", "los", " ", "criterios"}], 
+              ",", " ", 
+              RowBox[{"no", " ", "realizar", " ", "la", " ", "apuesta"}]}], 
+             " ", "*)"}], "\n", "\t        ", 
+            RowBox[{"<|", 
+             RowBox[{
+              RowBox[{"\"\<Team Pair\>\"", " ", "->", " ", 
+               RowBox[{"{", 
+                RowBox[{"team1", ",", " ", "team2"}], "}"}]}], ",", "\n", 
+              "\t          ", 
+              RowBox[{"\"\<Temporada\>\"", " ", "->", " ", "seasonBelong"}], 
+              ",", "\n", "\t          ", 
+              RowBox[{"\"\<Apuesta Realizada\>\"", " ", "->", " ", "False"}], 
+              ",", "\n", "\t          ", 
+              RowBox[{
+              "\"\<Local Goals\>\"", " ", "->", " ", "realHomeGoals"}], ",", 
+              "\n", "\t          ", 
+              RowBox[{"\"\<Away Goals\>\"", " ", "->", " ", "realAwayGoals"}],
+               ",", "\n", "\t          ", 
+              RowBox[{"\"\<Handicap\>\"", " ", "->", " ", 
+               RowBox[{"EVResults", "[", "\"\<Handicap\>\"", "]"}]}], ",", 
+              "\n", "\t          ", 
+              RowBox[{"\"\<Cuota\>\"", " ", "->", " ", 
+               RowBox[{"EVResults", "[", "\"\<Cuota\>\"", "]"}]}], ",", "\n", 
+              "\t          ", 
+              RowBox[{"\"\<Win Rate\>\"", " ", "->", " ", 
+               RowBox[{"EVResults", "[", "\"\<Win Rate\>\"", "]"}]}], ",", 
+              "\n", "\t          ", 
+              RowBox[{"\"\<Push Rate\>\"", " ", "->", " ", 
+               RowBox[{"EVResults", "[", "\"\<Push Rate\>\"", "]"}]}], ",", 
+              "\n", "\t          ", 
+              RowBox[{"\"\<Prob handicap\>\"", "->", " ", 
+               RowBox[{
+                RowBox[{"EVResults", "[", "\"\<Win Rate\>\"", "]"}], " ", "+",
+                 " ", 
+                RowBox[{"EVResults", "[", "\"\<Push Rate\>\"", "]"}]}]}], ",",
+               "\n", "\t          ", 
+              RowBox[{"\"\<Expected Value (EV)\>\"", " ", "->", " ", 
+               RowBox[{
+               "EVResults", "[", "\"\<Expected Value (EV)\>\"", "]"}]}], ",", 
+              "\n", "\t          ", 
+              RowBox[{
+              "\"\<Diff Goles Prom\>\"", " ", "->", " ", 
+               "averageDirectGoalDifference"}]}], "|>"}]}], "\n", "      ", 
+           "]"}]}]}], "\n", "    ", "]"}], ",", "\n", "    ", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", " ", 
+         RowBox[{"Length", "[", "testTeamPairs", "]"}]}], "}"}]}], "\n", "  ",
+       "]"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Convertir", " ", "los", " ", "resultados", " ", "a", " ", "un", " ", 
+     "Dataset", " ", "y", " ", "mostrar"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"evaluatedMatchesDataset", " ", "=", " ", 
+     RowBox[{"Dataset", "[", "evaluatedMatches", "]"}]}], ";"}]}]}]], "Code",
+ CellChangeTimes->{{3.9332507635096207`*^9, 3.9332507961907234`*^9}, 
+   3.933250918141878*^9, {3.9333213425810585`*^9, 3.933321343408497*^9}, {
+   3.933343579205969*^9, 3.933343582532137*^9}, {3.93336497751001*^9, 
+   3.9333649821978397`*^9}, {3.9335571377404213`*^9, 3.9335571702858295`*^9}},
+ CellLabel->
+  "In[272]:=",ExpressionUUID->"5c37184c-2f36-be4b-9223-6916bc319d34"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "RandomVariate", "posprm", 
+   "\"Parameter \\!\\(\\*RowBox[{\\\"Missing\\\", \\\"[\\\", \
+\\\"\\\\\\\"NotAvailable\\\\\\\"\\\", \\\"]\\\"}]\\) at position \
+\\!\\(\\*RowBox[{\\\"1\\\"}]\\) in \\!\\(\\*RowBox[{\\\"PoissonDistribution\\\
+\", \\\"[\\\", RowBox[{\\\"Missing\\\", \\\"[\\\", \\\"\\\\\\\"NotAvailable\\\
+\\\\\"\\\", \\\"]\\\"}], \\\"]\\\"}]\\) is expected to be positive.\"", 2, 
+   278, 101, 23625593415141500894, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.9335574146370583`*^9},
+ CellLabel->
+  "During evaluation of \
+In[272]:=",ExpressionUUID->"422af0b7-0275-9e4c-b140-ee7406a9352c"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "RandomVariate", "posprm", 
+   "\"Parameter \\!\\(\\*RowBox[{\\\"Missing\\\", \\\"[\\\", \
+\\\"\\\\\\\"NotAvailable\\\\\\\"\\\", \\\"]\\\"}]\\) at position \
+\\!\\(\\*RowBox[{\\\"1\\\"}]\\) in \\!\\(\\*RowBox[{\\\"PoissonDistribution\\\
+\", \\\"[\\\", RowBox[{\\\"Missing\\\", \\\"[\\\", \\\"\\\\\\\"NotAvailable\\\
+\\\\\"\\\", \\\"]\\\"}], \\\"]\\\"}]\\) is expected to be positive.\"", 2, 
+   278, 102, 23625593415141500894, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.9335574146513424`*^9},
+ CellLabel->
+  "During evaluation of \
+In[272]:=",ExpressionUUID->"4a4267c9-0775-4c4c-afaf-a48d5e0d635a"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "RandomVariate", "posprm", 
+   "\"Parameter \\!\\(\\*RowBox[{\\\"Missing\\\", \\\"[\\\", \
+\\\"\\\\\\\"NotAvailable\\\\\\\"\\\", \\\"]\\\"}]\\) at position \
+\\!\\(\\*RowBox[{\\\"1\\\"}]\\) in \\!\\(\\*RowBox[{\\\"PoissonDistribution\\\
+\", \\\"[\\\", RowBox[{\\\"Missing\\\", \\\"[\\\", \\\"\\\\\\\"NotAvailable\\\
+\\\\\"\\\", \\\"]\\\"}], \\\"]\\\"}]\\) is expected to be positive.\"", 2, 
+   278, 103, 23625593415141500894, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.933557414659725*^9},
+ CellLabel->
+  "During evaluation of \
+In[272]:=",ExpressionUUID->"dd8d5bc1-2e6e-6e45-9fc0-5b330f0c70a4"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General", "stop", 
+   "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"RandomVariate\\\", \
+\\\"::\\\", \\\"posprm\\\"}], \\\"MessageName\\\"]\\) will be suppressed \
+during this calculation.\"", 2, 278, 104, 23625593415141500894, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.9335574146677895`*^9},
+ CellLabel->
+  "During evaluation of \
+In[272]:=",ExpressionUUID->"d25bce06-e510-ff42-acbb-564a4a79ee07"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Partido: \"\>", 
+   "\[InvisibleSpace]", "\<\"Sheffield United\"\>", 
+   "\[InvisibleSpace]", "\<\" vs \"\>", 
+   "\[InvisibleSpace]", "\<\"Man City\"\>", 
+   "\[InvisibleSpace]", "\<\" | Resultado: \"\>", "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\"-\"\>", "\[InvisibleSpace]", "2", 
+   "\[InvisibleSpace]", "\<\" | Apuesta: \"\>", 
+   "\[InvisibleSpace]", "\<\"Ganada\"\>", 
+   "\[InvisibleSpace]", "\<\" | Dinero ganado/perdido: \"\>", 
+   "\[InvisibleSpace]", "3949.699651447358`", 
+   "\[InvisibleSpace]", "\<\" | Monto Apostado: \"\>", "\[InvisibleSpace]", 
+   "4293.151795051476`", "\[InvisibleSpace]", "\<\" | Capital Total: \"\>", 
+   "\[InvisibleSpace]", "13949.699651447358`"}],
+  SequenceForm[
+  "Partido: ", "Sheffield United", " vs ", "Man City", " | Resultado: ", 1, 
+   "-", 2, " | Apuesta: ", "Ganada", " | Dinero ganado/perdido: ", 
+   3949.699651447358, " | Monto Apostado: ", 4293.151795051476, 
+   " | Capital Total: ", 13949.699651447358`],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.9335574711164684`*^9},
+ CellLabel->
+  "During evaluation of \
+In[272]:=",ExpressionUUID->"6f06e71d-e6f9-724f-8911-025c24a428e9"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Power", "infy", 
+   "\"Infinite expression \\!\\(\\*FractionBox[\\\"1\\\", \\\"0\\\"]\\) \
+encountered.\"", 2, 278, 105, 23625593415141500894, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.933557577493046*^9},
+ CellLabel->
+  "During evaluation of \
+In[272]:=",ExpressionUUID->"7024c051-62b3-324d-b996-63049a2b8a89"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Infinity", "indet", 
+   "\"Indeterminate expression \\!\\(\\*RowBox[{\\\"0\\\", \\\" \\\", \
+\\\"ComplexInfinity\\\"}]\\) encountered.\"", 2, 278, 106, 
+   23625593415141500894, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.933557577566391*^9},
+ CellLabel->
+  "During evaluation of \
+In[272]:=",ExpressionUUID->"a8afe2ad-b0a8-8842-9b0c-64cf239bf0ab"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Power", "infy", 
+   "\"Infinite expression \\!\\(\\*FractionBox[\\\"1\\\", \\\"0\\\"]\\) \
+encountered.\"", 2, 278, 107, 23625593415141500894, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.9335575775771027`*^9},
+ CellLabel->
+  "During evaluation of \
+In[272]:=",ExpressionUUID->"d6d6f54e-7abb-c74f-b436-d1e71edd8b75"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Infinity", "indet", 
+   "\"Indeterminate expression \\!\\(\\*RowBox[{\\\"0\\\", \\\" \\\", \
+\\\"ComplexInfinity\\\"}]\\) encountered.\"", 2, 278, 108, 
+   23625593415141500894, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.9335575775860844`*^9},
+ CellLabel->
+  "During evaluation of \
+In[272]:=",ExpressionUUID->"4afb94fd-d8f5-404c-b790-890a86102247"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Partido: \"\>", "\[InvisibleSpace]", "\<\"Luton\"\>", 
+   "\[InvisibleSpace]", "\<\" vs \"\>", 
+   "\[InvisibleSpace]", "\<\"Tottenham\"\>", 
+   "\[InvisibleSpace]", "\<\" | Resultado: \"\>", "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "\<\"-\"\>", "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\" | Apuesta: \"\>", 
+   "\[InvisibleSpace]", "\<\"Media Ganada\"\>", 
+   "\[InvisibleSpace]", "\<\" | Dinero ganado/perdido: \"\>", 
+   "\[InvisibleSpace]", "5928.622351865128`", 
+   "\[InvisibleSpace]", "\<\" | Monto Apostado: \"\>", "\[InvisibleSpace]", 
+   "13949.699651447358`", "\[InvisibleSpace]", "\<\" | Capital Total: \"\>", 
+   "\[InvisibleSpace]", "19878.322003312485`"}],
+  SequenceForm[
+  "Partido: ", "Luton", " vs ", "Tottenham", " | Resultado: ", 0, "-", 1, 
+   " | Apuesta: ", "Media Ganada", " | Dinero ganado/perdido: ", 
+   5928.622351865128, " | Monto Apostado: ", 13949.699651447358`, 
+   " | Capital Total: ", 19878.322003312485`],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.9335575827035522`*^9},
+ CellLabel->
+  "During evaluation of \
+In[272]:=",ExpressionUUID->"36e67b92-8fe5-e441-a5eb-59afb296902d"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Partido: \"\>", "\[InvisibleSpace]", "\<\"Wolves\"\>", 
+   "\[InvisibleSpace]", "\<\" vs \"\>", 
+   "\[InvisibleSpace]", "\<\"Newcastle\"\>", 
+   "\[InvisibleSpace]", "\<\" | Resultado: \"\>", "\[InvisibleSpace]", "2", 
+   "\[InvisibleSpace]", "\<\"-\"\>", "\[InvisibleSpace]", "2", 
+   "\[InvisibleSpace]", "\<\" | Apuesta: \"\>", 
+   "\[InvisibleSpace]", "\<\"Ganada\"\>", 
+   "\[InvisibleSpace]", "\<\" | Dinero ganado/perdido: \"\>", 
+   "\[InvisibleSpace]", "7215.284620461157`", 
+   "\[InvisibleSpace]", "\<\" | Monto Apostado: \"\>", "\[InvisibleSpace]", 
+   "8799.12758592824`", "\[InvisibleSpace]", "\<\" | Capital Total: \"\>", 
+   "\[InvisibleSpace]", "27093.60662377364`"}],
+  SequenceForm[
+  "Partido: ", "Wolves", " vs ", "Newcastle", " | Resultado: ", 2, "-", 2, 
+   " | Apuesta: ", "Ganada", " | Dinero ganado/perdido: ", 7215.284620461157, 
+   " | Monto Apostado: ", 8799.12758592824, " | Capital Total: ", 
+   27093.60662377364],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.933557650929615*^9},
+ CellLabel->
+  "During evaluation of \
+In[272]:=",ExpressionUUID->"d02b15b6-d018-4749-93fd-f36694cad940"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Partido: \"\>", "\[InvisibleSpace]", "\<\"Luton\"\>", 
+   "\[InvisibleSpace]", "\<\" vs \"\>", 
+   "\[InvisibleSpace]", "\<\"Liverpool\"\>", 
+   "\[InvisibleSpace]", "\<\" | Resultado: \"\>", "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\"-\"\>", "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\" | Apuesta: \"\>", 
+   "\[InvisibleSpace]", "\<\"Ganada\"\>", 
+   "\[InvisibleSpace]", "\<\" | Dinero ganado/perdido: \"\>", 
+   "\[InvisibleSpace]", "28177.350888724588`", 
+   "\[InvisibleSpace]", "\<\" | Monto Apostado: \"\>", "\[InvisibleSpace]", 
+   "27093.60662377364`", "\[InvisibleSpace]", "\<\" | Capital Total: \"\>", 
+   "\[InvisibleSpace]", "55270.95751249823`"}],
+  SequenceForm[
+  "Partido: ", "Luton", " vs ", "Liverpool", " | Resultado: ", 1, "-", 1, 
+   " | Apuesta: ", "Ganada", " | Dinero ganado/perdido: ", 
+   28177.350888724588`, " | Monto Apostado: ", 27093.60662377364, 
+   " | Capital Total: ", 55270.95751249823],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.9335576913647385`*^9},
+ CellLabel->
+  "During evaluation of \
+In[272]:=",ExpressionUUID->"a170240f-b1fb-d244-aa1e-7eca217a720c"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Partido: \"\>", "\[InvisibleSpace]", "\<\"Luton\"\>", 
+   "\[InvisibleSpace]", "\<\" vs \"\>", 
+   "\[InvisibleSpace]", "\<\"Arsenal\"\>", 
+   "\[InvisibleSpace]", "\<\" | Resultado: \"\>", "\[InvisibleSpace]", "3", 
+   "\[InvisibleSpace]", "\<\"-\"\>", "\[InvisibleSpace]", "4", 
+   "\[InvisibleSpace]", "\<\" | Apuesta: \"\>", 
+   "\[InvisibleSpace]", "\<\"Ganada\"\>", 
+   "\[InvisibleSpace]", "\<\" | Dinero ganado/perdido: \"\>", 
+   "\[InvisibleSpace]", "55823.6670876232`", 
+   "\[InvisibleSpace]", "\<\" | Monto Apostado: \"\>", "\[InvisibleSpace]", 
+   "55270.95751249823`", "\[InvisibleSpace]", "\<\" | Capital Total: \"\>", 
+   "\[InvisibleSpace]", "111094.62460012143`"}],
+  SequenceForm[
+  "Partido: ", "Luton", " vs ", "Arsenal", " | Resultado: ", 3, "-", 4, 
+   " | Apuesta: ", "Ganada", " | Dinero ganado/perdido: ", 55823.6670876232, 
+   " | Monto Apostado: ", 55270.95751249823, " | Capital Total: ", 
+   111094.62460012143`],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.9335577938336563`*^9},
+ CellLabel->
+  "During evaluation of \
+In[272]:=",ExpressionUUID->"ae66ec6c-bf54-8348-a5e7-78de88c1834b"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Partido: \"\>", 
+   "\[InvisibleSpace]", "\<\"Sheffield United\"\>", 
+   "\[InvisibleSpace]", "\<\" vs \"\>", 
+   "\[InvisibleSpace]", "\<\"Liverpool\"\>", 
+   "\[InvisibleSpace]", "\<\" | Resultado: \"\>", "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "\<\"-\"\>", "\[InvisibleSpace]", "2", 
+   "\[InvisibleSpace]", "\<\" | Apuesta: \"\>", 
+   "\[InvisibleSpace]", "\<\"Anulada\"\>", 
+   "\[InvisibleSpace]", "\<\" | Dinero ganado/perdido: \"\>", 
+   "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "\<\" | Monto Apostado: \"\>", "\[InvisibleSpace]", 
+   "49573.66472894244`", "\[InvisibleSpace]", "\<\" | Capital Total: \"\>", 
+   "\[InvisibleSpace]", "111094.62460012143`"}],
+  SequenceForm[
+  "Partido: ", "Sheffield United", " vs ", "Liverpool", " | Resultado: ", 0, 
+   "-", 2, " | Apuesta: ", "Anulada", " | Dinero ganado/perdido: ", 0, 
+   " | Monto Apostado: ", 49573.66472894244, " | Capital Total: ", 
+   111094.62460012143`],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.933557803777033*^9},
+ CellLabel->
+  "During evaluation of \
+In[272]:=",ExpressionUUID->"7167329d-ab65-1b47-a9c9-9afba8c33370"]
+}, Open  ]],
+
+Cell[BoxData["$Aborted"], "Output",
+ CellChangeTimes->{3.933557844283598*^9},
+ CellLabel->
+  "Out[278]=",ExpressionUUID->"a62ca32d-74ec-7644-aabd-997828f30aac"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Mostrar", " ", "solo", " ", "las", " ", "apuestas", " ", "realizadas"}], 
+   " ", "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"apuestasRealizadas", " ", "=", " ", 
+     RowBox[{"evaluatedMatchesDataset", "[", 
+      RowBox[{"Select", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"#", "[", "\"\<Apuesta Realizada\>\"", "]"}], "==", "True"}],
+         " ", "&"}], "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"totalApuestasRealizadas", " ", "=", " ", 
+     RowBox[{"apuestasRealizadas", "//", "Length"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"Mostrar", " ", "apuestas", " ", "ganadas"}], ",", " ", 
+     RowBox[{"perdidas", " ", "y", " ", "anuladas"}]}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"apuestasGanadas", " ", "=", " ", 
+     RowBox[{"apuestasRealizadas", "[", 
+      RowBox[{"Select", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"#", "[", "\"\<Resultado Apuesta\>\"", "]"}], " ", "==", 
+         " ", "\"\<Ganada\>\""}], " ", "&"}], "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"apuestasPerdidas", " ", "=", " ", 
+     RowBox[{"apuestasRealizadas", "[", 
+      RowBox[{"Select", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"#", "[", "\"\<Resultado Apuesta\>\"", "]"}], " ", "==", 
+         " ", "\"\<Perdida\>\""}], " ", "&"}], "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"apuestasAnuladas", " ", "=", " ", 
+     RowBox[{"apuestasRealizadas", "[", 
+      RowBox[{"Select", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"#", "[", "\"\<Resultado Apuesta\>\"", "]"}], " ", "==", 
+         " ", "\"\<Anulada\>\""}], " ", "&"}], "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"totalApuestasGanadas", " ", "=", " ", 
+     RowBox[{"apuestasGanadas", "//", "Length"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"totalApuestasPerdidas", " ", "=", " ", 
+     RowBox[{"apuestasPerdidas", "//", "Length"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"totalApuestasAnuladas", " ", "=", " ", 
+     RowBox[{"apuestasAnuladas", "//", "Length"}]}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{"Calcular", " ", "probabilidades"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"probabilidadGanar", " ", "=", " ", 
+     RowBox[{
+     "totalApuestasGanadas", " ", "/", " ", "totalApuestasRealizadas"}]}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"probabilidadPerder", " ", "=", " ", 
+     RowBox[{
+     "totalApuestasPerdidas", " ", "/", " ", "totalApuestasRealizadas"}]}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"probabilidadAnular", " ", "=", " ", 
+     RowBox[{
+     "totalApuestasAnuladas", " ", "/", " ", "totalApuestasRealizadas"}]}], 
+    ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{"Imprimir", " ", "probabilidades"}], " ", "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Probabilidad de Ganar: \>\"", ",", " ", 
+      RowBox[{"probabilidadGanar", "//", "N"}]}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Probabilidad de Perder: \>\"", ",", " ", 
+      RowBox[{"probabilidadPerder", "//", "N"}]}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Probabilidad de Anular: \>\"", ",", " ", 
+      RowBox[{"probabilidadAnular", "//", "N"}]}], "]"}], ";"}], "\n", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{"Imprimir", " ", "resumen", " ", "financiero"}], " ", "*)"}], 
+   "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Total Ganado: \>\"", ",", " ", "ganancias"}], "]"}], ";"}], 
+   "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Total Perdido: \>\"", ",", " ", "perdidas"}], "]"}], ";"}], 
+   "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Total Recuperado: \>\"", ",", " ", "recuperadas"}], "]"}], 
+    ";"}]}]}]], "Code",
+ CellChangeTimes->{3.9332519378239746`*^9},
+ CellLabel->
+  "In[114]:=",ExpressionUUID->"44fd640a-cb9b-2542-ac4f-ff608c2aa5a8"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1140, 567.6},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+Magnification:>1. Inherited,
+FrontEndVersion->"14.1 for Microsoft Windows (64-bit) (July 23, 2024)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"d5816258-a920-4d4d-90bd-f6fe1352eea0"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 154, 3, 96, "Title",ExpressionUUID->"45c07c81-22dd-814d-a770-c8beca20e9be"],
+Cell[CellGroupData[{
+Cell[755, 29, 321, 6, 52, "Subtitle",ExpressionUUID->"5de3f8a8-592b-9945-81fb-6f375bfc3c33",
+ CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
+Cell[1079, 37, 2237, 60, 190, "Code",ExpressionUUID->"b1a5e0d4-30e7-1941-ae5a-ad4f48478dea",
+ CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
+Cell[3319, 99, 2357, 65, 190, "Code",ExpressionUUID->"13273f09-de73-c44d-be2a-fa8c417041ae",
+ CellGroupingRules->{"GroupTogetherGrouping", 10000.}]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[5713, 169, 209, 5, 52, "Subtitle",ExpressionUUID->"1701be5a-7509-1b49-8f44-0431a1c6e575"],
+Cell[5925, 176, 1779, 45, 278, "Code",ExpressionUUID->"c1308362-7e5a-8541-8ff4-6653b2ad6dcb"],
+Cell[7707, 223, 1164, 31, 85, "Code",ExpressionUUID->"a8b66109-dcb4-2649-b19b-b27a62df9672"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[8908, 259, 201, 5, 52, "Subtitle",ExpressionUUID->"f1cc2b77-74ee-c148-93f7-c18c27aa3897"],
+Cell[9112, 266, 8167, 185, 1033, "Code",ExpressionUUID->"36326364-c010-6547-ba5a-82d6de0037b4"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[17316, 456, 219, 6, 52, "Subtitle",ExpressionUUID->"449b96d9-1c03-ec49-adcd-b8205b860f1a"],
+Cell[17538, 464, 4231, 107, 436, "Code",ExpressionUUID->"91f602ba-3d09-1c4b-b937-a0294fc85e42"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[21806, 576, 202, 3, 52, "Subtitle",ExpressionUUID->"5e2939ee-0e31-a648-9db0-5c6242103d33"],
+Cell[22011, 581, 3352, 83, 454, "Code",ExpressionUUID->"b56b1387-8dca-3543-b2c2-6c20249af815"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[25400, 669, 184, 4, 52, "Subtitle",ExpressionUUID->"cec51deb-155e-b74d-8d53-215b64a6aa4b"],
+Cell[25587, 675, 8415, 172, 998, "Code",ExpressionUUID->"48550f0d-e7b1-8744-926d-3689741b9eda"],
+Cell[34005, 849, 177, 3, 28, "Input",ExpressionUUID->"61bac645-c3a4-4b4e-9b8e-acb86a7961e6"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[34219, 857, 223, 4, 52, "Subtitle",ExpressionUUID->"b83d3b24-e8d9-d842-9634-24aa5a25ddc8"],
+Cell[CellGroupData[{
+Cell[34467, 865, 46164, 923, 4247, "Code",ExpressionUUID->"5c37184c-2f36-be4b-9223-6916bc319d34"],
+Cell[80634, 1790, 658, 13, 26, "Message",ExpressionUUID->"422af0b7-0275-9e4c-b140-ee7406a9352c"],
+Cell[81295, 1805, 658, 13, 26, "Message",ExpressionUUID->"4a4267c9-0775-4c4c-afaf-a48d5e0d635a"],
+Cell[81956, 1820, 656, 13, 26, "Message",ExpressionUUID->"dd8d5bc1-2e6e-6e45-9fc0-5b330f0c70a4"],
+Cell[82615, 1835, 465, 10, 26, "Message",ExpressionUUID->"d25bce06-e510-ff42-acbb-564a4a79ee07"],
+Cell[83083, 1847, 1203, 24, 39, "Print",ExpressionUUID->"6f06e71d-e6f9-724f-8911-025c24a428e9"],
+Cell[84289, 1873, 373, 9, 36, "Message",ExpressionUUID->"7024c051-62b3-324d-b996-63049a2b8a89"],
+Cell[84665, 1884, 408, 10, 26, "Message",ExpressionUUID->"a8afe2ad-b0a8-8842-9b0c-64cf239bf0ab"],
+Cell[85076, 1896, 375, 9, 36, "Message",ExpressionUUID->"d6d6f54e-7abb-c74f-b436-d1e71edd8b75"],
+Cell[85454, 1907, 410, 10, 26, "Message",ExpressionUUID->"4afb94fd-d8f5-404c-b790-890a86102247"],
+Cell[CellGroupData[{
+Cell[85889, 1921, 1194, 23, 22, "Print",ExpressionUUID->"36e67b92-8fe5-e441-a5eb-59afb296902d"],
+Cell[87086, 1946, 1174, 23, 22, "Print",ExpressionUUID->"d02b15b6-d018-4749-93fd-f36694cad940"],
+Cell[88263, 1971, 1179, 23, 22, "Print",ExpressionUUID->"a170240f-b1fb-d244-aa1e-7eca217a720c"],
+Cell[89445, 1996, 1173, 23, 22, "Print",ExpressionUUID->"ae66ec6c-bf54-8348-a5e7-78de88c1834b"],
+Cell[90621, 2021, 1172, 24, 22, "Print",ExpressionUUID->"7167329d-ab65-1b47-a9c9-9afba8c33370"]
+}, Open  ]],
+Cell[91808, 2048, 160, 3, 32, "Output",ExpressionUUID->"a62ca32d-74ec-7644-aabd-997828f30aac"]
+}, Open  ]],
+Cell[91983, 2054, 3990, 103, 489, "Code",ExpressionUUID->"44fd640a-cb9b-2542-ac4f-ff608c2aa5a8"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

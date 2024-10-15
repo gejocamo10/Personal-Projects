@@ -1,0 +1,1981 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     71276,       1973]
+NotebookOptionsPosition[     69790,       1945]
+NotebookOutlinePosition[     70225,       1962]
+CellTagsIndexPosition[     70182,       1959]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{"echo", " ", "'"}], "\n", 
+ RowBox[{
+  RowBox[{"PacletInstall", "[", "\"\<ONNXRuntimeResources\>\"", "]"}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"targetDevice", " ", "=", " ", "\"\<DirectML\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"embed", " ", "=", " ", 
+   RowBox[{"NetInitialize", "@", 
+    RowBox[{"EmbeddingLayer", "[", 
+     RowBox[{"2", ",", " ", "3"}], "]"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"out", " ", "=", " ", 
+   RowBox[{"embed", "[", 
+    RowBox[{"2", ",", " ", 
+     RowBox[{"TargetDevice", " ", "->", " ", "\"\<DirectML\>\""}]}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"Print", "[", "out", "]"}], ";"}], "'"}], " ", ">", " ", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"/", "cygdrive"}], "/", "c"}], "/", "cygwin"}], "/", "home"}], 
+    "/", "testmngr"}], "/", 
+   RowBox[{"testingTargetDevice_withONNX", ".", "wl"}]}]}]}], "Code",
+ CellChangeTimes->{{3.9345344618472195`*^9, 3.9345344626944904`*^9}, {
+   3.9345438139716244`*^9, 3.934543814166439*^9}, 
+   3.934979915676302*^9},ExpressionUUID->"3d994c34-df98-9e42-8292-\
+4c913766fd79"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"echo", " ", "'"}], 
+    RowBox[{"<<", " ", "targetDevice"}]}], " ", "=", " ", 
+   "\"\<DirectML\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"embed", " ", "=", " ", 
+   RowBox[{"NetInitialize", "@", 
+    RowBox[{"EmbeddingLayer", "[", 
+     RowBox[{"2", ",", " ", "3"}], "]"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"out", " ", "=", " ", 
+   RowBox[{"embed", "[", 
+    RowBox[{"2", ",", " ", 
+     RowBox[{"TargetDevice", " ", "->", " ", "\"\<GPU\>\""}]}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"Print", "[", "out", "]"}], ";"}], "'"}], " ", ">", " ", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"/", "cygdrive"}], "/", "c"}], "/", "cygwin"}], "/", "home"}], 
+    "/", "testmngr"}], "/", 
+   RowBox[{"testingTargetDevice", ".", "wl"}]}]}]}], "Code",
+ CellChangeTimes->{{3.934543721162323*^9, 3.9345437293590126`*^9}, {
+   3.9345437792490673`*^9, 3.9345438185000935`*^9}, 3.9348763316919556`*^9, {
+   3.9348763647510586`*^9, 3.9348763768374977`*^9}, {3.934876589142025*^9, 
+   3.934876589573208*^9}, {3.934877183037794*^9, 3.9348771833918266`*^9}, 
+   3.934877598055004*^9},ExpressionUUID->"63249a45-6557-0848-a875-\
+38d75d16939c"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"echo", " ", "'"}], 
+   RowBox[{"<<", " ", "PacletInstall[\"ONNXRuntimeResources\"]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"targetDevice", " ", "=", " ", "\"\<DirectML\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"embed", " ", "=", " ", 
+   RowBox[{"NetInitialize", "@", 
+    RowBox[{"EmbeddingLayer", "[", 
+     RowBox[{"2", ",", " ", "3"}], "]"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"out", " ", "=", " ", 
+   RowBox[{"embed", "[", 
+    RowBox[{"2", ",", " ", 
+     RowBox[{"TargetDevice", " ", "->", " ", "\"\<CUDA\>\""}]}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"Print", "[", "out", "]"}], ";"}], "'"}], " ", ">", " ", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"/", "cygdrive"}], "/", "c"}], "/", "cygwin"}], "/", "home"}], 
+    "/", "testmngr"}], "/", 
+   RowBox[{"testingTargetDevice_withONNX", ".", "wl"}]}]}]}], "Code",
+ CellChangeTimes->{
+  3.934876361311655*^9},ExpressionUUID->"ab05e9c6-c9e6-204c-955e-\
+4c297ebc2b3b"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"#", "!"}], "/", "bin"}], "/", "bash"}], "\n", 
+ RowBox[{"for", " ", "x", " ", "in", " ", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"1", ".."}], "20"}], "}"}]}], "\n", "do", "\n", 
+ RowBox[{"    ", 
+  RowBox[{"echo", " ", "\"\<Ejecutando iteraci\[OAcute]n $x\>\""}]}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"/", "cygdrive"}], "/", "c"}], "/", "Mathematica"}], "/", "W"}],
+    "-", "WIN", "-", 
+   RowBox[{
+    RowBox[{"Standard", "/", "14.1"}], ".0", 
+    RowBox[{
+     RowBox[{".0", "/", "current"}], "/", 
+     RowBox[{"wolfram", ".", "exe"}]}]}], " ", "-", 
+   RowBox[{"script", " ", 
+    RowBox[{"C", ":", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"/", "cygwin"}], "/", "home"}], "/", "testmngr"}], "/", 
+      RowBox[{"basictest", ".", "wl"}]}]}]}]}]}], "\n", "done"}], "Code",
+ CellChangeTimes->{{3.934876494210615*^9, 3.9348765012009354`*^9}, {
+   3.9348817413619175`*^9, 3.9348817478624268`*^9}, 
+   3.934881793093212*^9},ExpressionUUID->"aa327303-b259-9f49-95d8-\
+0a294a8f4d85"],
+
+Cell[BoxData[{
+ RowBox[{"import", " ", "pandas", " ", "as", " ", "pd"}], "\n", 
+ RowBox[{
+  RowBox[{"import", " ", "numpy", " ", "as", " ", "np"}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Load", " ", "the", " ", 
+  RowBox[{"user", "'"}], "s", " ", "dataset"}], "\n", 
+ RowBox[{
+  RowBox[{"new_user", "_file", "_path"}], " ", "=", " ", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"'", "/", "mnt"}], "/", "data"}], "/", "data_ligainglesa"}], 
+   RowBox[{"_chatGPT", ".", 
+    RowBox[{"csv", "'"}]}]}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"user_data", "_cleaned", "_fresh"}], " ", "=", " ", 
+   RowBox[{
+    RowBox[{"pd", ".", "read_csv"}], 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"new_user", "_file", "_path"}], ")"}], ".", "drop"}], 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"columns", 
+       RowBox[{"=[", "'DateConverted'", "]"}]}], ",", " ", 
+      RowBox[{"errors", "=", 
+       RowBox[{"'", 
+        RowBox[{"ignore", "'"}]}]}]}], ")"}]}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", 
+  RowBox[{"Convert", " ", "'"}], 
+  RowBox[{"Date", "'"}], " ", "to", " ", "datetime", " ", "format", " ", 
+  "and", " ", "sort", " ", "the", " ", "data", " ", "by", " ", "date", " ", 
+  "from", " ", "oldest", " ", "to", " ", "newest"}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"Date", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{
+   RowBox[{"pd", ".", "to_datetime"}], 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"user_data", "_cleaned", 
+      RowBox[{"_fresh", "[", 
+       RowBox[{"'", 
+        RowBox[{"Date", "'"}]}], "]"}]}], ",", " ", 
+     RowBox[{"format", "=", 
+      RowBox[{"'", "%", 
+       RowBox[{"d", "/", "%"}], 
+       RowBox[{"m", "/", "%"}], 
+       RowBox[{"Y", "'"}]}]}], ",", " ", 
+     RowBox[{"errors", "=", 
+      RowBox[{"'", 
+       RowBox[{"coerce", "'"}]}]}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"user_data", "_cleaned", "_fresh"}], " ", "=", " ", 
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", ".", "sort_values"}], 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"by", "=", 
+       RowBox[{"'", 
+        RowBox[{"Date", "'"}]}]}], ")"}], ".", "reset_index"}], 
+    RowBox[{"(", 
+     RowBox[{"drop", "=", "True"}], ")"}]}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"#", " ", "Step", " ", "2"}], ":", " ", 
+  RowBox[{
+  "Correct", " ", "the", " ", "ELO", " ", "calculation", " ", 
+   "process"}]}], "\n", 
+ RowBox[{"#", " ", "Initialize", " ", "parameters", " ", "for", " ", 
+  "ELO"}], "\n", 
+ RowBox[{"initial_elo", " ", "=", " ", "1500"}], "\n", 
+ RowBox[{
+  RowBox[{"k_factor", " ", "=", " ", "10"}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Initialize", " ", "a", " ", "dictionary", " ", "to", " ", 
+  "store", " ", "ELO", " ", "ratings"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"elo_ratings", "_final"}], " ", "=", " ", 
+   RowBox[{"{", "}"}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Function", " ", "to", " ", "calculate", " ", "expected", 
+  " ", "score"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"def", " ", "expected_score", 
+    RowBox[{"(", 
+     RowBox[{"rating_a", ",", " ", "rating_b"}], ")"}]}], ":", "\n", "    ", 
+   RowBox[{"return", " ", 
+    RowBox[{"1", " ", "/", " ", 
+     RowBox[{"(", 
+      RowBox[{"1", " ", "+", " ", 
+       RowBox[{"10", " ", "**", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"rating_b", " ", "-", " ", "rating_a"}], ")"}], " ", "/", 
+          " ", "400"}], ")"}]}]}], ")"}]}]}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Function", " ", "to", " ", "update", " ", "ELO", " ", 
+  "rating"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"def", " ", "update_elo", 
+    RowBox[{"(", 
+     RowBox[{"current_rating", ",", " ", "expected", ",", " ", "actual"}], 
+     ")"}]}], ":", "\n", "    ", 
+   RowBox[{
+    RowBox[{"return", " ", "current_rating"}], " ", "+", " ", 
+    RowBox[{"k_factor", " ", "*", " ", 
+     RowBox[{"(", 
+      RowBox[{"actual", " ", "-", " ", "expected"}], ")"}]}]}]}], 
+  "\n"}], "\n", 
+ RowBox[{"#", " ", "Create", " ", "ELO", " ", "ratings", " ", "for", " ", 
+  "each", " ", "team", " ", "across", " ", "all", " ", "matches", " ", 
+  RowBox[{"(", 
+   RowBox[{
+   "without", " ", "adding", " ", "to", " ", "dataframe", " ", "yet"}], 
+   ")"}]}], "\n", 
+ RowBox[{
+  RowBox[{"for", " ", "index"}], ",", " ", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"match", " ", "in", " ", "user_data", "_cleaned", 
+     RowBox[{"_fresh", ".", "iterrows"}], 
+     RowBox[{"(", ")"}]}], ":", "\n", "    ", "home_team"}], " ", "=", " ", 
+   RowBox[{"match", "[", 
+    RowBox[{"'", 
+     RowBox[{"HomeTeam", "'"}]}], "]"}]}]}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{"away_team", " ", "=", " ", 
+   RowBox[{"match", "[", 
+    RowBox[{"'", 
+     RowBox[{"AwayTeam", "'"}]}], "]"}]}]}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{"home_goals", " ", "=", " ", 
+   RowBox[{"match", "[", 
+    RowBox[{"'", 
+     RowBox[{"FTHG", "'"}]}], "]"}]}]}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{"away_goals", " ", "=", " ", 
+   RowBox[{"match", "[", 
+    RowBox[{"'", 
+     RowBox[{"FTAG", "'"}]}], "]"}]}], "\n", "    "}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{
+  "#", " ", "Initialize", " ", "ELO", " ", "ratings", " ", "for", " ", "new", 
+   " ", "teams"}]}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{
+   RowBox[{"if", " ", "home_team", " ", "not", " ", "in", " ", "elo_ratings", 
+    RowBox[{"_final", ":", "\n", "        ", 
+     RowBox[{"elo_ratings", 
+      RowBox[{"_final", "[", "home_team", "]"}]}]}]}], " ", "=", " ", 
+   "initial_elo"}]}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{
+   RowBox[{"if", " ", "away_team", " ", "not", " ", "in", " ", "elo_ratings", 
+    RowBox[{"_final", ":", "\n", "        ", 
+     RowBox[{"elo_ratings", 
+      RowBox[{"_final", "[", "away_team", "]"}]}]}]}], " ", "=", " ", 
+   "initial_elo"}], "\n"}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{"#", " ", "Get", " ", "current", " ", "ratings"}]}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{"home_rating", " ", "=", " ", 
+   RowBox[{"elo_ratings", 
+    RowBox[{"_final", "[", "home_team", "]"}]}]}]}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{"away_rating", " ", "=", " ", 
+   RowBox[{"elo_ratings", 
+    RowBox[{"_final", "[", "away_team", "]"}]}]}], "\n"}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{"#", " ", "Calculate", " ", "expected", " ", "scores"}]}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{"home_expected", " ", "=", " ", 
+   RowBox[{"expected_score", 
+    RowBox[{"(", 
+     RowBox[{"home_rating", ",", " ", "away_rating"}], ")"}]}]}]}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{"away_expected", " ", "=", " ", 
+   RowBox[{"expected_score", 
+    RowBox[{"(", 
+     RowBox[{"away_rating", ",", " ", "home_rating"}], ")"}]}]}], 
+  "\n"}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{
+  "#", " ", "Determine", " ", "the", " ", "result", " ", "of", " ", "the", 
+   " ", "match"}]}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"if", " ", "home_goals"}], " ", ">", " ", 
+    RowBox[{"away_goals", ":", "\n", "        ", "home_actual"}]}], ",", " ", 
+   RowBox[{"away_actual", " ", "=", " ", "1"}], ",", " ", "0"}]}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"elif", " ", "home_goals"}], " ", "<", " ", 
+    RowBox[{"away_goals", ":", "\n", "        ", "home_actual"}]}], ",", " ", 
+   RowBox[{"away_actual", " ", "=", " ", "0"}], ",", " ", "1"}]}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{
+   RowBox[{"else", ":", "\n", "        ", "home_actual"}], ",", " ", 
+   RowBox[{"away_actual", " ", "=", " ", "0.5"}], ",", " ", "0.5"}], 
+  "\n"}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{"#", " ", "Update", " ", "ELO", " ", "ratings"}]}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{
+   RowBox[{"elo_ratings", 
+    RowBox[{"_final", "[", "home_team", "]"}]}], " ", "=", " ", 
+   RowBox[{"update_elo", 
+    RowBox[{"(", 
+     RowBox[{
+     "home_rating", ",", " ", "home_expected", ",", " ", "home_actual"}], 
+     ")"}]}]}]}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{
+   RowBox[{"elo_ratings", 
+    RowBox[{"_final", "[", "away_team", "]"}]}], " ", "=", " ", 
+   RowBox[{"update_elo", 
+    RowBox[{"(", 
+     RowBox[{
+     "away_rating", ",", " ", "away_expected", ",", " ", "away_actual"}], 
+     ")"}]}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"#", " ", "Step", " ", "3"}], ":", " ", 
+  RowBox[{
+  "Attach", " ", "final", " ", "ELO", " ", "ratings", " ", "to", " ", "the", 
+   " ", "dataset"}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"HomeTeamELO", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"HomeTeam", "'"}]}], "]"}], ".", "map"}], 
+   RowBox[{"(", 
+    RowBox[{"elo_ratings", "_final"}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"AwayTeamELO", "'"}]}], "]"}]}], " ", "=", " ", 
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"AwayTeam", "'"}]}], "]"}], ".", "map"}], 
+    RowBox[{"(", 
+     RowBox[{"elo_ratings", "_final"}], ")"}]}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"#", " ", "Now"}], ",", " ", 
+  RowBox[{
+  "the", " ", "ELOs", " ", "are", " ", "correctly", " ", "attached", " ", 
+   "to", " ", "the", " ", "dataset", " ", "based", " ", "on", " ", "the", " ",
+    "final", " ", 
+   RowBox[{"ratings", ".", "\n", "\n", "#"}], " ", "Proceed", " ", "with", 
+   " ", "the", " ", "rest", " ", "of", " ", "the", " ", 
+   "calculations"}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"HomeTeamAverageGoals", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"HomeTeam", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"FTHG", "'"}]}], "]"}], ".", "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"mean", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"AwayTeamAverageGoals", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"AwayTeam", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"FTAG", "'"}]}], "]"}], ".", "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"mean", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"HomeTeamMedianGoals", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"HomeTeam", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"FTHG", "'"}]}], "]"}], ".", "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"median", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"AwayTeamMedianGoals", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"AwayTeam", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"FTAG", "'"}]}], "]"}], ".", "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"median", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"Total", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"FTHG", "'"}]}], "]"}]}], " ", "+", " ", 
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"FTAG", "'"}]}], "]"}]}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"DifferenceGoals", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"FTHG", "'"}]}], "]"}]}], " ", "-", " ", 
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"FTAG", "'"}]}], "]"}]}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"DifferenceELO", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"HomeTeamELO", "'"}]}], "]"}]}], " ", "-", " ", 
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"AwayTeamELO", "'"}]}], "]"}]}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"DifferenceAverageGoalsHomeAway", "'"}]}], "]"}]}], " ", "=", 
+  " ", 
+  RowBox[{
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"HomeTeamAverageGoals", "'"}]}], "]"}]}], " ", "-", " ", 
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"AwayTeamAverageGoals", "'"}]}], "]"}]}]}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"DifferenceMedianGoalsHomeAway", "'"}]}], "]"}]}], " ", "=", 
+   " ", 
+   RowBox[{
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"HomeTeamMedianGoals", "'"}]}], "]"}]}], " ", "-", " ", 
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"AwayTeamMedianGoals", "'"}]}], "]"}]}]}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Group", " ", "by", " ", "matches", " ", "to", " ", 
+  "calculate", " ", "differences", " ", "by", " ", "match"}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"MatchTeams", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{
+    RowBox[{"_fresh", "[", 
+     RowBox[{"[", 
+      RowBox[{
+       RowBox[{"'", 
+        RowBox[{"HomeTeam", "'"}]}], ",", " ", 
+       RowBox[{"'", 
+        RowBox[{"AwayTeam", "'"}]}]}], "]"}], "]"}], ".", "apply"}], 
+   RowBox[{"(", 
+    RowBox[{"tuple", ",", " ", 
+     RowBox[{"axis", "=", "1"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"DifferenceAverageGoalsByMatch", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"MatchTeams", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"DifferenceGoals", "'"}]}], "]"}], ".", "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"mean", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"DifferenceMedianGoalsByMatch", "'"}]}], "]"}]}], " ", "=", " ", 
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", ".", "groupby"}], 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"'", 
+        RowBox[{"MatchTeams", "'"}]}], ")"}], "[", 
+      RowBox[{"'", 
+       RowBox[{"DifferenceGoals", "'"}]}], "]"}], ".", "transform"}], 
+    RowBox[{"(", 
+     RowBox[{"'", 
+      RowBox[{"median", "'"}]}], ")"}]}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Calculate", " ", "overall", " ", "averages", " ", "and", 
+  " ", "medians", " ", "for", " ", "goals"}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"HomeTeamAverageGoalsTotal", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"HomeTeam", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"FTHG", "'"}]}], "]"}], ".", "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"mean", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"AwayTeamAverageGoalsTotal", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"AwayTeam", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"FTAG", "'"}]}], "]"}], ".", "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"mean", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"HomeTeamMedianGoalsTotal", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"HomeTeam", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"FTHG", "'"}]}], "]"}], ".", "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"median", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"AwayTeamMedianGoalsTotal", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"AwayTeam", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"FTAG", "'"}]}], "]"}], ".", "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"median", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"DifferenceAverageGoalsTotal", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"HomeTeamAverageGoalsTotal", "'"}]}], "]"}]}], " ", "-", " ", 
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"AwayTeamAverageGoalsTotal", "'"}]}], "]"}]}]}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"DifferenceMedianGoalsTotal", "'"}]}], "]"}]}], " ", "=", " ", 
+   RowBox[{
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"HomeTeamMedianGoalsTotal", "'"}]}], "]"}]}], " ", "-", " ", 
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"AwayTeamMedianGoalsTotal", "'"}]}], "]"}]}]}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Calculate", " ", "shots", " ", "on", " ", "target", " ", 
+  "proportions"}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"HomeTeamProportionShotsOnTarget", "'"}]}], "]"}]}], " ", "=", 
+  " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"HST", "'"}]}], "]"}], " ", "/", " ", "user_data"}], "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"HS", "'"}]}], "]"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"AwayTeamProportionShotsOnTarget", "'"}]}], "]"}]}], " ", "=", 
+  " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"AST", "'"}]}], "]"}], " ", "/", " ", "user_data"}], "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"AS", "'"}]}], "]"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"DifferenceProportionShotsOnTarget", "'"}]}], "]"}]}], " ", "=", 
+  " ", 
+  RowBox[{
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"HomeTeamProportionShotsOnTarget", "'"}]}], "]"}]}], " ", "-", 
+   " ", 
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"AwayTeamProportionShotsOnTarget", "'"}]}], "]"}]}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"HomeTeamAverageProportionShotsOnTarget", "'"}]}], "]"}]}], " ", 
+  "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"HomeTeam", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"HomeTeamProportionShotsOnTarget", "'"}]}], "]"}], ".", 
+    "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"mean", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"AwayTeamAverageProportionShotsOnTarget", "'"}]}], "]"}]}], " ", 
+  "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"AwayTeam", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"AwayTeamProportionShotsOnTarget", "'"}]}], "]"}], ".", 
+    "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"mean", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"HomeTeamMedianProportionShotsOnTarget", "'"}]}], "]"}]}], " ", 
+  "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"HomeTeam", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"HomeTeamProportionShotsOnTarget", "'"}]}], "]"}], ".", 
+    "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"median", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"AwayTeamMedianProportionShotsOnTarget", "'"}]}], "]"}]}], " ", 
+  "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"AwayTeam", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"AwayTeamProportionShotsOnTarget", "'"}]}], "]"}], ".", 
+    "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"median", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"DifferenceAverageProportionShotsOnTargetHomeAway", "'"}]}], 
+    "]"}]}], " ", "=", " ", 
+  RowBox[{
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"HomeTeamAverageProportionShotsOnTarget", "'"}]}], "]"}]}], " ",
+    "-", " ", 
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"AwayTeamAverageProportionShotsOnTarget", "'"}]}], 
+     "]"}]}]}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"DifferenceMedianProportionShotsOnTargetHomeAway", "'"}]}], 
+     "]"}]}], " ", "=", " ", 
+   RowBox[{
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"HomeTeamMedianProportionShotsOnTarget", "'"}]}], "]"}]}], " ",
+     "-", " ", 
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"AwayTeamMedianProportionShotsOnTarget", "'"}]}], "]"}]}]}]}], 
+  "\n"}], "\n", 
+ RowBox[{"#", " ", "Group", " ", "by", " ", "matches", " ", "to", " ", 
+  "calculate", " ", "shots", " ", "on", " ", "target", " ", "by", " ", 
+  "match"}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"DifferenceAverageProportionShotsOnTargetByMatch", "'"}]}], 
+    "]"}]}], " ", "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"MatchTeams", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"DifferenceProportionShotsOnTarget", "'"}]}], "]"}], ".", 
+    "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"mean", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"DifferenceMedianProportionShotsOnTargetByMatch", "'"}]}], 
+     "]"}]}], " ", "=", " ", 
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", ".", "groupby"}], 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"'", 
+        RowBox[{"MatchTeams", "'"}]}], ")"}], "[", 
+      RowBox[{"'", 
+       RowBox[{"DifferenceProportionShotsOnTarget", "'"}]}], "]"}], ".", 
+     "transform"}], 
+    RowBox[{"(", 
+     RowBox[{"'", 
+      RowBox[{"median", "'"}]}], ")"}]}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Calculate", " ", "average", " ", "and", " ", "median", 
+  " ", "shots", " ", "on", " ", "target"}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"HomeTeamAverageShotsOnTarget", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"HomeTeam", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"HST", "'"}]}], "]"}], ".", "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"mean", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"AwayTeamAverageShotsOnTarget", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"AwayTeam", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"AST", "'"}]}], "]"}], ".", "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"mean", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"HomeTeamMedianShotsOnTarget", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"HomeTeam", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"HST", "'"}]}], "]"}], ".", "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"median", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"AwayTeamMedianShotsOnTarget", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"AwayTeam", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"AST", "'"}]}], "]"}], ".", "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"median", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"DifferenceAverageShotsOnTargetHomeAway", "'"}]}], "]"}]}], " ", 
+  "=", " ", 
+  RowBox[{
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"HomeTeamAverageShotsOnTarget", "'"}]}], "]"}]}], " ", "-", " ", 
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"AwayTeamAverageShotsOnTarget", "'"}]}], "]"}]}]}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"DifferenceMedianShotsOnTargetHomeAway", "'"}]}], "]"}]}], " ", 
+   "=", " ", 
+   RowBox[{
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"HomeTeamMedianShotsOnTarget", "'"}]}], "]"}]}], " ", "-", " ", 
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"AwayTeamMedianShotsOnTarget", "'"}]}], "]"}]}]}]}], 
+  "\n"}], "\n", 
+ RowBox[{"#", " ", "Group", " ", "by", " ", "matches", " ", "to", " ", 
+  "calculate", " ", "shots", " ", "on", " ", "target", " ", "by", " ", 
+  "match"}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"DifferenceShotsOnTarget", "'"}]}], "]"}]}], " ", "=", " ", 
+  RowBox[{
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"HST", "'"}]}], "]"}]}], " ", "-", " ", 
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"AST", "'"}]}], "]"}]}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"HomeTeamAverageShotsOnTargetByMatch", "'"}]}], "]"}]}], " ", 
+  "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"MatchTeams", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"HST", "'"}]}], "]"}], ".", "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"mean", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"AwayTeamAverageShotsOnTargetByMatch", "'"}]}], "]"}]}], " ", 
+  "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"MatchTeams", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"AST", "'"}]}], "]"}], ".", "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"mean", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"HomeTeamMedianShotsOnTargetByMatch", "'"}]}], "]"}]}], " ", "=",
+   " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"MatchTeams", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"HST", "'"}]}], "]"}], ".", "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"median", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"AwayTeamMedianShotsOnTargetByMatch", "'"}]}], "]"}]}], " ", "=",
+   " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"MatchTeams", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"AST", "'"}]}], "]"}], ".", "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"median", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"DifferenceAverageShotsOnTargetByMatch", "'"}]}], "]"}]}], " ", 
+  "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"MatchTeams", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"DifferenceShotsOnTarget", "'"}]}], "]"}], ".", "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"mean", "'"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"'", 
+     RowBox[{"DifferenceMedianShotsOnTargetByMatch", "'"}]}], "]"}]}], " ", 
+  "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", ".", "groupby"}], 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"'", 
+       RowBox[{"MatchTeams", "'"}]}], ")"}], "[", 
+     RowBox[{"'", 
+      RowBox[{"DifferenceShotsOnTarget", "'"}]}], "]"}], ".", "transform"}], 
+   RowBox[{"(", 
+    RowBox[{"'", 
+     RowBox[{"median", "'"}]}], ")"}]}]}]}], "Code",
+ CellChangeTimes->{
+  3.9345649134384174`*^9, {3.934565005838745*^9, 3.93456501055937*^9}, {
+   3.934565522793585*^9, 3.9345655417218494`*^9}, {3.9345660151627464`*^9, 
+   3.9345660181685047`*^9}},ExpressionUUID->"7f629236-c8da-2041-b7a5-\
+77e39e03988b"],
+
+Cell[BoxData[{
+ RowBox[{"from", " ", 
+  RowBox[{"sklearn", ".", "ensemble"}], " ", "import", " ", 
+  "RandomForestRegressor"}], "\n", 
+ RowBox[{"from", " ", 
+  RowBox[{"sklearn", ".", "model_selection"}], " ", "import", " ", 
+  "train_test", "_split"}], "\n", 
+ RowBox[{
+  RowBox[{"from", " ", 
+   RowBox[{"sklearn", ".", "metrics"}], " ", "import", " ", "mean_squared", 
+   "_error"}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Select", " ", "the", " ", "two", " ", "variables", " ", 
+  "for", " ", "prediction", " ", "and", " ", "the", " ", "target", " ", 
+  "variable"}], "\n", 
+ RowBox[{"X", " ", "=", " ", 
+  RowBox[{"user_data", "_cleaned", 
+   RowBox[{"_fresh", "[", 
+    RowBox[{"[", 
+     RowBox[{
+      RowBox[{"'", 
+       RowBox[{"DifferenceELO", "'"}]}], ",", " ", 
+      RowBox[{"'", 
+       RowBox[{"DifferenceAverageShotsOnTargetByMatch", "'"}]}]}], "]"}], 
+    "]"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"y", " ", "=", " ", 
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"'", 
+      RowBox[{"DifferenceGoals", "'"}]}], "]"}]}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Split", " ", "the", " ", "data", " ", "into", " ", 
+  "training", " ", "and", " ", "testing", " ", "sets"}], "\n", 
+ RowBox[{
+  RowBox[{"X_train", ",", " ", "X_test", ",", " ", "y_train", ",", " ", 
+   RowBox[{"y_test", " ", "=", " ", 
+    RowBox[{"train_test", "_split", 
+     RowBox[{"(", 
+      RowBox[{"X", ",", " ", "y", ",", " ", 
+       RowBox[{"test_size", "=", "0.2"}], ",", " ", 
+       RowBox[{"random_state", "=", "42"}]}], ")"}]}]}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Initialize", " ", "the", " ", 
+  "RandomForestRegressor"}], "\n", 
+ RowBox[{
+  RowBox[{"model", " ", "=", " ", 
+   RowBox[{"RandomForestRegressor", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"n_estimators", "=", "100"}], ",", " ", 
+      RowBox[{"random_state", "=", "42"}]}], ")"}]}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Train", " ", "the", " ", "model"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"model", ".", "fit"}], 
+   RowBox[{"(", 
+    RowBox[{"X_train", ",", " ", "y_train"}], ")"}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Predict", " ", "on", " ", "the", " ", "test", " ", 
+  "set"}], "\n", 
+ RowBox[{
+  RowBox[{"y_pred", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"model", ".", "predict"}], 
+    RowBox[{"(", "X_test", ")"}]}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Evaluate", " ", "the", " ", "model", " ", "using", " ", 
+  "mean", " ", "squared", " ", "error", " ", 
+  RowBox[{"(", "MSE", ")"}]}], "\n", 
+ RowBox[{"mse", " ", "=", " ", 
+  RowBox[{"mean_squared", "_error", 
+   RowBox[{"(", 
+    RowBox[{"y_test", ",", " ", "y_pred"}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"rmse", " ", "=", " ", 
+   RowBox[{"mse", " ", "**", " ", "0.5"}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Display", " ", "the", " ", "RMSE", " ", "of", " ", "the", 
+  " ", "model"}], "\n", "rmse"}], "Code",
+ CellChangeTimes->{{3.934566020014883*^9, 
+  3.9345660213338184`*^9}},ExpressionUUID->"5a1b86b1-7c93-5044-b0d1-\
+26ea58c2c3ef"],
+
+Cell[BoxData[{
+ RowBox[{"#", " ", "Define", " ", "a", " ", "function", " ", "to", " ", 
+  "calculate", " ", "the", " ", "tolerance", " ", "accuracy"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"def", " ", "evaluate_model", "_with", "_tolerance", 
+    RowBox[{"(", 
+     RowBox[{"y_true", ",", " ", "y_pred", ",", " ", "tolerance"}], ")"}]}], 
+   ":", "\n", "    ", "differences"}], " ", "=", " ", 
+  RowBox[{"abs", 
+   RowBox[{"(", 
+    RowBox[{"y_true", " ", "-", " ", "y_pred"}], ")"}]}]}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{"correct_predictions", " ", "=", " ", 
+   RowBox[{"sum", 
+    RowBox[{"(", 
+     RowBox[{"differences", " ", "<=", " ", "tolerance"}], ")"}]}]}]}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{"total_predictions", " ", "=", " ", 
+   RowBox[{"len", 
+    RowBox[{"(", "differences", ")"}]}]}]}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{"accuracy", " ", "=", " ", 
+   RowBox[{
+   "correct_predictions", " ", "/", " ", "total_predictions"}]}]}], "\n", 
+ RowBox[{"    ", 
+  RowBox[{"return", " ", 
+   RowBox[{"{", "\n", "        ", 
+    RowBox[{
+     RowBox[{"\"\<Correct Predictions\>\"", ":", " ", "correct_predictions"}],
+      ",", "\n", "        ", 
+     RowBox[{"\"\<Total Predictions\>\"", ":", " ", "total_predictions"}], 
+     ",", "\n", "        ", 
+     RowBox[{"\"\<Accuracy\>\"", ":", " ", "accuracy"}]}], "\n", "    ", 
+    "}"}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Set", " ", "a", " ", "tolerance", " ", "level", " ", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"e", ".", "g", "."}], ",", " ", 
+    RowBox[{"1", " ", "goal", " ", "difference", " ", "tolerance"}]}], 
+   ")"}]}], "\n", 
+ RowBox[{
+  RowBox[{"tolerance_value", " ", "=", " ", "1"}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Evaluate", " ", "the", " ", "model", " ", "with", " ", 
+  "the", " ", "specified", " ", "tolerance"}], "\n", 
+ RowBox[{
+  RowBox[{"tolerance_results", " ", "=", " ", 
+   RowBox[{"evaluate_model", "_with", "_tolerance", 
+    RowBox[{"(", 
+     RowBox[{"y_test", ",", " ", "y_pred", ",", " ", "tolerance_value"}], 
+     ")"}]}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Display", " ", "the", " ", 
+  "results"}], "\n", "tolerance_results", "\n"}], "Code",
+ CellChangeTimes->{
+  3.934566497832617*^9},ExpressionUUID->"f8631b6e-5559-0749-bd01-\
+39d1d47497a5"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"#", " ", "First"}], ",", " ", 
+  RowBox[{
+  "check", " ", "if", " ", "the", " ", "variables", " ", "are", " ", 
+   "present", " ", "in", " ", "the", " ", "dataset", " ", "before", " ", 
+   "proceeding", " ", "to", " ", "create", " ", "new", " ", 
+   RowBox[{"ones", ".", "\n", "\n", "#"}], " ", "Initialize", " ", "a", " ", 
+   "list", " ", "of", " ", "potential", " ", "variables", " ", "to", " ", 
+   "create"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"variables_to", "_create"}], " ", "=", " ", 
+   RowBox[{"{", "\n", "    ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"'", 
+       RowBox[{"TotalCardsDifference", "'"}]}], ":", " ", 
+      RowBox[{"[", 
+       RowBox[{
+        RowBox[{"'", 
+         RowBox[{"HY", "'"}]}], ",", " ", 
+        RowBox[{"'", 
+         RowBox[{"AY", "'"}]}], ",", " ", 
+        RowBox[{"'", 
+         RowBox[{"HR", "'"}]}], ",", " ", 
+        RowBox[{"'", 
+         RowBox[{"AR", "'"}]}]}], "]"}]}], ",", "\n", "    ", 
+     RowBox[{
+      RowBox[{"'", 
+       RowBox[{"BookingPointsDifference", "'"}]}], ":", " ", 
+      RowBox[{"[", 
+       RowBox[{
+        RowBox[{"'", 
+         RowBox[{"HBP", "'"}]}], ",", " ", 
+        RowBox[{"'", 
+         RowBox[{"ABP", "'"}]}]}], "]"}]}], ",", "\n", "    ", 
+     RowBox[{
+      RowBox[{"'", 
+       RowBox[{"CornersDifference", "'"}]}], ":", " ", 
+      RowBox[{"[", 
+       RowBox[{
+        RowBox[{"'", 
+         RowBox[{"HC", "'"}]}], ",", " ", 
+        RowBox[{"'", 
+         RowBox[{"AC", "'"}]}]}], "]"}]}], ",", "\n", "    ", 
+     RowBox[{
+      RowBox[{"'", 
+       RowBox[{"FoulsCommittedDifference", "'"}]}], ":", " ", 
+      RowBox[{"[", 
+       RowBox[{
+        RowBox[{"'", 
+         RowBox[{"HF", "'"}]}], ",", " ", 
+        RowBox[{"'", 
+         RowBox[{"AF", "'"}]}]}], "]"}]}], ",", "\n", "    ", 
+     RowBox[{
+      RowBox[{"'", 
+       RowBox[{"OffsidesDifference", "'"}]}], ":", " ", 
+      RowBox[{"[", 
+       RowBox[{
+        RowBox[{"'", 
+         RowBox[{"HO", "'"}]}], ",", " ", 
+        RowBox[{"'", 
+         RowBox[{"AO", "'"}]}]}], "]"}]}], ",", "\n", "    ", 
+     RowBox[{
+      RowBox[{"'", 
+       RowBox[{"ShotsAccuracyDifference", "'"}]}], ":", " ", 
+      RowBox[{"[", 
+       RowBox[{
+        RowBox[{"'", 
+         RowBox[{"HST", "'"}]}], ",", " ", 
+        RowBox[{"'", 
+         RowBox[{"HS", "'"}]}], ",", " ", 
+        RowBox[{"'", 
+         RowBox[{"AST", "'"}]}], ",", " ", 
+        RowBox[{"'", 
+         RowBox[{"AS", "'"}]}]}], "]"}]}], ",", "\n", "    ", 
+     RowBox[{
+      RowBox[{"'", 
+       RowBox[{"HomeOddsDifference", "'"}]}], ":", " ", 
+      RowBox[{"[", 
+       RowBox[{
+        RowBox[{"'", 
+         RowBox[{"MaxH", "'"}]}], ",", " ", 
+        RowBox[{"'", 
+         RowBox[{"AvgH", "'"}]}]}], "]"}]}], ",", "\n", "    ", 
+     RowBox[{
+      RowBox[{"'", 
+       RowBox[{"AwayOddsDifference", "'"}]}], ":", " ", 
+      RowBox[{"[", 
+       RowBox[{
+        RowBox[{"'", 
+         RowBox[{"MaxA", "'"}]}], ",", " ", 
+        RowBox[{"'", 
+         RowBox[{"AvgA", "'"}]}]}], "]"}]}], ",", "\n", "    ", 
+     RowBox[{
+      RowBox[{"'", 
+       RowBox[{"WoodworkHitsDifference", "'"}]}], ":", " ", 
+      RowBox[{"[", 
+       RowBox[{
+        RowBox[{"'", 
+         RowBox[{"HHW", "'"}]}], ",", " ", 
+        RowBox[{"'", 
+         RowBox[{"AHW", "'"}]}]}], "]"}]}], ",", "\n", "    ", 
+     RowBox[{
+      RowBox[{"'", 
+       RowBox[{"BlockedShotsDifference", "'"}]}], ":", " ", 
+      RowBox[{"[", 
+       RowBox[{
+        RowBox[{"'", 
+         RowBox[{"HFKC", "'"}]}], ",", " ", 
+        RowBox[{"'", 
+         RowBox[{"AFKC", "'"}]}]}], "]"}]}]}], "\n", "}"}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Check", " ", "which", " ", "variables", " ", "exist", " ",
+   "in", " ", "the", " ", "dataset"}], "\n", 
+ RowBox[{"existing_variables", " ", "=", " ", 
+  RowBox[{"{", "}"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"for", " ", "var"}], ",", " ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"columns", " ", "in", " ", "variables_to", 
+      RowBox[{"_create", ".", "items"}], 
+      RowBox[{"(", ")"}]}], ":", "\n", "    ", 
+     RowBox[{"if", " ", "all", 
+      RowBox[{"(", 
+       RowBox[{"col", " ", "in", " ", "user_data", "_cleaned", 
+        RowBox[{"_fresh", ".", "columns"}], " ", "for", " ", "col", " ", "in",
+         " ", "columns"}], ")"}]}], ":", "\n", "        ", 
+     RowBox[{"existing_variables", "[", "var", "]"}]}], " ", "=", " ", 
+    "columns"}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"#", " ", "Now"}], ",", " ", 
+  RowBox[{
+  "proceed", " ", "to", " ", "create", " ", "new", " ", "variables", " ", 
+   "based", " ", "on", " ", "those", " ", "that", " ", "actually", " ", 
+   "exist"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"if", " ", "'"}], 
+    RowBox[{"TotalCardsDifference", "'"}], " ", "in", " ", 
+    RowBox[{"existing_variables", ":", "\n", "    ", 
+     RowBox[{"user_data", "_cleaned", 
+      RowBox[{"_fresh", "[", 
+       RowBox[{"'", 
+        RowBox[{"TotalCardsDifference", "'"}]}], "]"}]}]}]}], " ", "=", " ", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"user_data", "_cleaned", 
+       RowBox[{"_fresh", "[", 
+        RowBox[{"'", 
+         RowBox[{"HY", "'"}]}], "]"}]}], " ", "+", " ", 
+      RowBox[{"user_data", "_cleaned", 
+       RowBox[{"_fresh", "[", 
+        RowBox[{"'", 
+         RowBox[{"HR", "'"}]}], "]"}]}]}], ")"}], " ", "-", " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"user_data", "_cleaned", 
+       RowBox[{"_fresh", "[", 
+        RowBox[{"'", 
+         RowBox[{"AY", "'"}]}], "]"}]}], " ", "+", " ", 
+      RowBox[{"user_data", "_cleaned", 
+       RowBox[{"_fresh", "[", 
+        RowBox[{"'", 
+         RowBox[{"AR", "'"}]}], "]"}]}]}], ")"}]}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"if", " ", "'"}], 
+    RowBox[{"BookingPointsDifference", "'"}], " ", "in", " ", 
+    RowBox[{"existing_variables", ":", "\n", "    ", 
+     RowBox[{"user_data", "_cleaned", 
+      RowBox[{"_fresh", "[", 
+       RowBox[{"'", 
+        RowBox[{"BookingPointsDifference", "'"}]}], "]"}]}]}]}], " ", "=", 
+   " ", 
+   RowBox[{
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"HBP", "'"}]}], "]"}]}], " ", "-", " ", 
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"ABP", "'"}]}], "]"}]}]}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"if", " ", "'"}], 
+    RowBox[{"CornersDifference", "'"}], " ", "in", " ", 
+    RowBox[{"existing_variables", ":", "\n", "    ", 
+     RowBox[{"user_data", "_cleaned", 
+      RowBox[{"_fresh", "[", 
+       RowBox[{"'", 
+        RowBox[{"CornersDifference", "'"}]}], "]"}]}]}]}], " ", "=", " ", 
+   RowBox[{
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"HC", "'"}]}], "]"}]}], " ", "-", " ", 
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"AC", "'"}]}], "]"}]}]}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"if", " ", "'"}], 
+    RowBox[{"FoulsCommittedDifference", "'"}], " ", "in", " ", 
+    RowBox[{"existing_variables", ":", "\n", "    ", 
+     RowBox[{"user_data", "_cleaned", 
+      RowBox[{"_fresh", "[", 
+       RowBox[{"'", 
+        RowBox[{"FoulsCommittedDifference", "'"}]}], "]"}]}]}]}], " ", "=", 
+   " ", 
+   RowBox[{
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"HF", "'"}]}], "]"}]}], " ", "-", " ", 
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"AF", "'"}]}], "]"}]}]}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"if", " ", "'"}], 
+    RowBox[{"OffsidesDifference", "'"}], " ", "in", " ", 
+    RowBox[{"existing_variables", ":", "\n", "    ", 
+     RowBox[{"user_data", "_cleaned", 
+      RowBox[{"_fresh", "[", 
+       RowBox[{"'", 
+        RowBox[{"OffsidesDifference", "'"}]}], "]"}]}]}]}], " ", "=", " ", 
+   RowBox[{
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"HO", "'"}]}], "]"}]}], " ", "-", " ", 
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"AO", "'"}]}], "]"}]}]}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"if", " ", "'"}], 
+    RowBox[{"ShotsAccuracyDifference", "'"}], " ", "in", " ", 
+    RowBox[{"existing_variables", ":", "\n", "    ", 
+     RowBox[{"user_data", "_cleaned", 
+      RowBox[{"_fresh", "[", 
+       RowBox[{"'", 
+        RowBox[{"ShotsAccuracyDifference", "'"}]}], "]"}]}]}]}], " ", "=", 
+   " ", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"user_data", "_cleaned", 
+      RowBox[{
+       RowBox[{"_fresh", "[", 
+        RowBox[{"'", 
+         RowBox[{"HST", "'"}]}], "]"}], " ", "/", " ", "user_data"}], 
+      "_cleaned", 
+      RowBox[{"_fresh", "[", 
+       RowBox[{"'", 
+        RowBox[{"HS", "'"}]}], "]"}]}], ")"}], " ", "-", " ", 
+    RowBox[{"(", 
+     RowBox[{"user_data", "_cleaned", 
+      RowBox[{
+       RowBox[{"_fresh", "[", 
+        RowBox[{"'", 
+         RowBox[{"AST", "'"}]}], "]"}], " ", "/", " ", "user_data"}], 
+      "_cleaned", 
+      RowBox[{"_fresh", "[", 
+       RowBox[{"'", 
+        RowBox[{"AS", "'"}]}], "]"}]}], ")"}]}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"if", " ", "'"}], 
+    RowBox[{"HomeOddsDifference", "'"}], " ", "in", " ", 
+    RowBox[{"existing_variables", ":", "\n", "    ", 
+     RowBox[{"user_data", "_cleaned", 
+      RowBox[{"_fresh", "[", 
+       RowBox[{"'", 
+        RowBox[{"HomeOddsDifference", "'"}]}], "]"}]}]}]}], " ", "=", " ", 
+   RowBox[{
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"MaxH", "'"}]}], "]"}]}], " ", "-", " ", 
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"AvgH", "'"}]}], "]"}]}]}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"if", " ", "'"}], 
+    RowBox[{"AwayOddsDifference", "'"}], " ", "in", " ", 
+    RowBox[{"existing_variables", ":", "\n", "    ", 
+     RowBox[{"user_data", "_cleaned", 
+      RowBox[{"_fresh", "[", 
+       RowBox[{"'", 
+        RowBox[{"AwayOddsDifference", "'"}]}], "]"}]}]}]}], " ", "=", " ", 
+   RowBox[{
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"MaxA", "'"}]}], "]"}]}], " ", "-", " ", 
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"AvgA", "'"}]}], "]"}]}]}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"if", " ", "'"}], 
+    RowBox[{"WoodworkHitsDifference", "'"}], " ", "in", " ", 
+    RowBox[{"existing_variables", ":", "\n", "    ", 
+     RowBox[{"user_data", "_cleaned", 
+      RowBox[{"_fresh", "[", 
+       RowBox[{"'", 
+        RowBox[{"WoodworkHitsDifference", "'"}]}], "]"}]}]}]}], " ", "=", " ", 
+   RowBox[{
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"HHW", "'"}]}], "]"}]}], " ", "-", " ", 
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"AHW", "'"}]}], "]"}]}]}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"if", " ", "'"}], 
+    RowBox[{"BlockedShotsDifference", "'"}], " ", "in", " ", 
+    RowBox[{"existing_variables", ":", "\n", "    ", 
+     RowBox[{"user_data", "_cleaned", 
+      RowBox[{"_fresh", "[", 
+       RowBox[{"'", 
+        RowBox[{"BlockedShotsDifference", "'"}]}], "]"}]}]}]}], " ", "=", " ", 
+   RowBox[{
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"HFKC", "'"}]}], "]"}]}], " ", "-", " ", 
+    RowBox[{"user_data", "_cleaned", 
+     RowBox[{"_fresh", "[", 
+      RowBox[{"'", 
+       RowBox[{"AFKC", "'"}]}], "]"}]}]}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Display", " ", "the", " ", "updated", " ", "dataset", " ",
+   "to", " ", "verify", " ", "that", " ", "the", " ", "new", " ", "variables",
+   " ", "were", " ", "added", " ", "successfully"}], "\n", 
+ RowBox[{
+  RowBox[{"import", " ", "ace_tools", " ", "as", " ", "tools"}], ";", " ", 
+  RowBox[{
+   RowBox[{"tools", ".", "display_dataframe"}], "_to", "_user", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"name", "=", "\"\<Updated Dataset with New Variables\>\""}], ",",
+      " ", 
+     RowBox[{"dataframe", "=", 
+      RowBox[{"user_data", "_cleaned", "_fresh"}]}]}], 
+    ")"}]}]}], "\n", "\[AliasDelimiter]"}], "Code",
+ CellChangeTimes->{{3.9345664833918743`*^9, 
+  3.9345664843744392`*^9}},ExpressionUUID->"57805998-81b6-c54b-9913-\
+d7e481caaca3"],
+
+Cell[BoxData[{
+ RowBox[{"#", " ", "Use", " ", "only", " ", "the", " ", "top", " ", "5", " ", 
+  "most", " ", "important", " ", "variables", " ", "for", " ", "the", " ", 
+  "new", " ", "model"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"top_", "5", "_predictors"}], " ", "=", " ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"importance_df", "[", 
+      RowBox[{"'", 
+       RowBox[{"Feature", "'"}]}], "]"}], ".", "head"}], 
+    RowBox[{
+     RowBox[{"(", "5", ")"}], ".", "tolist"}], 
+    RowBox[{"(", ")"}]}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Create", " ", "a", " ", "new", " ", "dataset", " ", 
+  "with", " ", "only", " ", "these", " ", "top", " ", "5", " ", 
+  "predictors"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"X_top", "_", "5"}], " ", "=", " ", 
+   RowBox[{"user_data", "_cleaned", 
+    RowBox[{"_fresh", "[", 
+     RowBox[{"top_", "5", "_predictors"}], "]"}]}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Split", " ", "the", " ", "data", " ", "into", " ", 
+  "training", " ", "and", " ", "testing", " ", "sets"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"X_train", "_top", "_", "5"}], ",", " ", 
+   RowBox[{"X_test", "_top", "_", "5"}], ",", " ", 
+   RowBox[{"y_train", "_top", "_", "5"}], ",", " ", 
+   RowBox[{
+    RowBox[{"y_test", "_top", "_", "5"}], " ", "=", " ", 
+    RowBox[{"train_test", "_split", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"X_top", "_", "5"}], ",", " ", "y", ",", " ", 
+       RowBox[{"test_size", "=", "0.2"}], ",", " ", 
+       RowBox[{"random_state", "=", "42"}]}], ")"}]}]}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Train", " ", "a", " ", "new", " ", 
+  "RandomForestRegressor", " ", "model", " ", "with", " ", "the", " ", "top", 
+  " ", "5", " ", "variables"}], "\n", 
+ RowBox[{
+  RowBox[{"model_top", "_", "5"}], " ", "=", " ", 
+  RowBox[{"RandomForestRegressor", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"n_estimators", "=", "100"}], ",", " ", 
+     RowBox[{"random_state", "=", "42"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"model_top", "_", "5.", "fit", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"X_train", "_top", "_", "5"}], ",", " ", 
+     RowBox[{"y_train", "_top", "_", "5"}]}], ")"}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Predict", " ", "on", " ", "the", " ", "new", " ", "test", 
+  " ", "set"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"y_pred", "_top", "_", "5"}], " ", "=", " ", 
+   RowBox[{"model_top", "_", "5.", "predict", 
+    RowBox[{"(", 
+     RowBox[{"X_test", "_top", "_", "5"}], ")"}]}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Calculate", " ", "RMSE", " ", "for", " ", "the", " ", 
+  "new", " ", "model"}], "\n", 
+ RowBox[{
+  RowBox[{"mse_top", "_", "5"}], " ", "=", " ", 
+  RowBox[{"mean_squared", "_error", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"y_test", "_top", "_", "5"}], ",", " ", 
+     RowBox[{"y_pred", "_top", "_", "5"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"rmse_top", "_", "5"}], " ", "=", " ", 
+   RowBox[{"mse_top", "_", 
+    RowBox[{"5", " ", "**", " ", "0.5"}]}]}], "\n"}], "\n", 
+ RowBox[{"#", " ", "Evaluate", " ", "the", " ", "model", " ", "using", " ", 
+  "the", " ", "tolerance", " ", "metric", " ", "with", " ", "a", " ", 
+  "tolerance", " ", "of", " ", "1", " ", "goal"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"tolerance_results", "_top", "_", "5", "_", "1", "_goal"}], " ", 
+   "=", " ", 
+   RowBox[{"evaluate_model", "_with", "_tolerance", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"y_test", "_top", "_", "5"}], ",", " ", 
+      RowBox[{"y_pred", "_top", "_", "5"}], ",", " ", "1"}], ")"}]}]}], 
+  "\n"}], "\n", 
+ RowBox[{"#", " ", "Evaluate", " ", "the", " ", "model", " ", "with", " ", 
+  "a", " ", "tolerance", " ", "of", " ", "2", " ", "goals"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"tolerance_results", "_top", "_", "5", "_", "2", "_goals"}], " ", 
+   "=", " ", 
+   RowBox[{"evaluate_model", "_with", "_tolerance", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"y_test", "_top", "_", "5"}], ",", " ", 
+      RowBox[{"y_pred", "_top", "_", "5"}], ",", " ", "2"}], ")"}]}]}], 
+  "\n"}], "\n", 
+ RowBox[{"#", " ", "Return", " ", "RMSE", " ", "and", " ", "tolerance", " ", 
+  "results", " ", "for", " ", "the", " ", "top", " ", "5", " ", 
+  "variables"}], "\n", 
+ RowBox[{
+  RowBox[{"rmse_top", "_", "5"}], ",", " ", 
+  RowBox[{"tolerance_results", "_top", "_", "5", "_", "1", "_goal"}], ",", 
+  " ", 
+  RowBox[{
+  "tolerance_results", "_top", "_", "5", "_", "2", 
+   "_goals"}]}], "\n"}], "Code",
+ CellChangeTimes->{
+  3.9345667978928356`*^9},ExpressionUUID->"81496073-1e83-7c4b-8c32-\
+711adf070d4d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"{", 
+   RowBox[{
+   "\"\<Season\>\"", ",", " ", "\"\<HomeTeamELO\>\"", ",", " ", 
+    "\"\<AwayTeamELO\>\"", ",", "\n", "\"\<HomeTeamAverageGoals\>\"", ",", 
+    " ", "\"\<AwayTeamAverageGoals\>\"", ",", "\n", 
+    "\"\<HomeTeamMedianGoals\>\"", ",", " ", "\"\<AwayTeamMedianGoals\>\"", 
+    ",", " ", "\"\<Total\>\"", ",", "\n", "\"\<DifferenceGoals\>\"", ",", 
+    " ", "\"\<DifferenceELO\>\"", ",", " ", 
+    "\"\<DifferenceAverageGoalsHomeAway\>\"", ",", "\n", 
+    "\"\<DifferenceMedianGoalsHomeAway\>\"", ",", " ", "\"\<MatchTeams\>\"", 
+    ",", " ", "\n", "\"\<DifferenceAverageGoalsByMatch\>\"", ",", " ", 
+    "\"\<DifferenceMedianGoalsByMatch\>\"", ",", " ", "\n", 
+    "\"\<HomeTeamAverageGoalsTotal\>\"", ",", " ", 
+    "\"\<AwayTeamAverageGoalsTotal\>\"", ",", " ", "\n", 
+    "\"\<HomeTeamMedianGoalsTotal\>\"", ",", " ", 
+    "\"\<AwayTeamMedianGoalsTotal\>\"", ",", " ", "\n", 
+    "\"\<DifferenceAverageGoalsTotal\>\"", ",", " ", 
+    "\"\<DifferenceMedianGoalsTotal\>\"", ",", " ", "\n", 
+    "\"\<HomeTeamProportionShotsOnTarget\>\"", ",", " ", 
+    "\"\<AwayTeamProportionShotsOnTarget\>\"", ",", " ", "\n", 
+    "\"\<DifferenceProportionShotsOnTarget\>\"", ",", " ", "\n", 
+    "\"\<HomeTeamAverageProportionShotsOnTarget\>\"", ",", " ", "\n", 
+    "\"\<AwayTeamAverageProportionShotsOnTarget\>\"", ",", " ", "\n", 
+    "\"\<HomeTeamMedianProportionShotsOnTarget\>\"", ",", " ", "\n", 
+    "\"\<AwayTeamMedianProportionShotsOnTarget\>\"", ",", " ", "\n", 
+    "\"\<DifferenceAverageProportionShotsOnTargetHomeAway\>\"", ",", " ", 
+    "\n", "\"\<DifferenceMedianProportionShotsOnTargetHomeAway\>\"", ",", " ",
+     "\n", "\"\<DifferenceAverageProportionShotsOnTargetByMatch\>\"", ",", 
+    " ", "\n", "\"\<DifferenceMedianProportionShotsOnTargetByMatch\>\"", ",", 
+    " ", "\n", "\"\<HomeTeamAverageShotsOnTarget\>\"", ",", " ", 
+    "\"\<AwayTeamAverageShotsOnTarget\>\"", ",", " ", "\n", 
+    "\"\<HomeTeamMedianShotsOnTarget\>\"", ",", " ", 
+    "\"\<AwayTeamMedianShotsOnTarget\>\"", ",", " ", "\n", 
+    "\"\<DifferenceAverageShotsOnTargetHomeAway\>\"", ",", " ", "\n", 
+    "\"\<DifferenceMedianShotsOnTargetHomeAway\>\"", ",", " ", 
+    "\"\<DifferenceShotsOnTarget\>\"", ",", " ", "\n", 
+    "\"\<HomeTeamAverageShotsOnTargetByMatch\>\"", ",", " ", "\n", 
+    "\"\<AwayTeamAverageShotsOnTargetByMatch\>\"", ",", " ", "\n", 
+    "\"\<HomeTeamMedianShotsOnTargetByMatch\>\"", ",", " ", "\n", 
+    "\"\<AwayTeamMedianShotsOnTargetByMatch\>\"", ",", " ", "\n", 
+    "\"\<DifferenceAverageShotsOnTargetByMatch\>\"", ",", " ", "\n", 
+    "\"\<DifferenceMedianShotsOnTargetByMatch\>\""}], "}"}], "//", 
+  "Length"}]], "Code",
+ CellChangeTimes->{{3.934559065764572*^9, 3.9345590676349564`*^9}, {
+  3.9345591216233463`*^9, 3.9345591220464535`*^9}, {3.934562462663555*^9, 
+  3.9345624827842236`*^9}},
+ CellLabel->
+  "In[413]:=",ExpressionUUID->"ba61aa0c-eb79-df4e-a8fc-a548f2b77934"],
+
+Cell[BoxData["45"], "Output",
+ CellChangeTimes->{{3.93456247869932*^9, 3.9345624831511726`*^9}},
+ CellLabel->
+  "Out[413]=",ExpressionUUID->"b3bde147-2b8e-d747-a94c-0493a6ab4a77"]
+}, Open  ]],
+
+Cell["\<\
+     HomeTeamELO : Rating ELO del equipo local, calculado y actualizado \
+secuencialmente despu\[EAcute]s de cada partido .
+  AwayTeamELO : Rating ELO del equipo visitante, calculado de la misma forma \
+que el del equipo local .
+  HomeTeamAverageGoals : Promedio de goles anotados por el equipo local en \
+todos sus partidos previos .
+     AwayTeamAverageGoals : Promedio de goles anotados por el equipo \
+visitante en todos sus partidos previos .
+     HomeTeamMedianGoals : Mediana de goles anotados por el equipo local .
+        AwayTeamMedianGoals : Mediana de goles anotados por el equipo \
+visitante .
+        Total : Suma de goles entre el equipo local y visitante en el partido \
+(FTHG + FTAG) .
+           DifferenceGoals : Diferencia de goles entre el equipo local y \
+visitante (FTHG - FTAG) .
+           DifferenceELO : Diferencia de ELO entre el equipo local y \
+visitante (HomeTeamELO - AwayTeamELO) .
+              DifferenceAverageGoalsHomeAway : Diferencia entre los promedios \
+de goles del equipo local y visitante .
+              DifferenceMedianGoalsHomeAway : Diferencia entre las medianas \
+de goles del equipo local y visitante .
+                 MatchTeams : Tupla que contiene el equipo local y visitante \
+(HomeTeam, AwayTeam) .
+                 DifferenceAverageGoalsByMatch : Promedio de las diferencias \
+de goles por partido entre los equipos .
+                    DifferenceMedianGoalsByMatch : Mediana de las diferencias \
+de goles por partido entre los equipos .
+                    HomeTeamAverageGoalsTotal : Promedio de goles anotados \
+por el equipo local en todos sus partidos (sin distinguir si jug\[OAcute] de \
+local o visitante) .
+                    AwayTeamAverageGoalsTotal : Promedio de goles anotados \
+por el equipo visitante en todos sus partidos (sin distinguir si jug\[OAcute] \
+de local o visitante) .
+                    HomeTeamMedianGoalsTotal : Mediana de los goles anotados \
+por el equipo local en todos sus partidos (sin distinguir local o visitante) .
+                    AwayTeamMedianGoalsTotal : Mediana de los goles anotados \
+por el equipo visitante en todos sus partidos .
+                    DifferenceAverageGoalsTotal : Diferencia entre los \
+promedios de goles totales de los equipos (HomeTeamAverageGoalsTotal - \
+AwayTeamAverageGoalsTotal) .
+                    DifferenceMedianGoalsTotal : Diferencia entre las \
+medianas de goles totales de los equipos (HomeTeamMedianGoalsTotal - \
+AwayTeamMedianGoalsTotal) .
+                    HomeTeamProportionShotsOnTarget : Proporci\[OAcute]n de \
+disparos al arco respecto al total de disparos del equipo local (HST / HS) .
+                    AwayTeamProportionShotsOnTarget : Proporci\[OAcute]n de \
+disparos al arco respecto al total de disparos del equipo visitante (AST / \
+AS) .
+                    DifferenceProportionShotsOnTarget : Diferencia de las \
+proporciones de disparos al arco entre el equipo local y visitante \
+(HomeTeamProportionShotsOnTarget - AwayTeamProportionShotsOnTarget) .
+                    HomeTeamAverageProportionShotsOnTarget : Promedio de la \
+proporci\[OAcute]n de disparos al arco del equipo local en todos sus partidos \
+previos .
+                    AwayTeamAverageProportionShotsOnTarget : Promedio de la \
+proporci\[OAcute]n de disparos al arco del equipo visitante en todos sus \
+partidos previos .
+                    HomeTeamMedianProportionShotsOnTarget : Mediana de la \
+proporci\[OAcute]n de disparos al arco del equipo local en sus partidos \
+previos .
+                    AwayTeamMedianProportionShotsOnTarget : Mediana de la \
+proporci\[OAcute]n de disparos al arco del equipo visitante en sus partidos \
+previos .
+                    DifferenceAverageProportionShotsOnTargetHomeAway : \
+Diferencia entre los promedios de proporciones de disparos al arco entre el \
+equipo local y visitante .
+                    DifferenceMedianProportionShotsOnTargetHomeAway : \
+Diferencia entre las medianas de proporciones de disparos al arco entre el \
+equipo local y visitante .
+                    DifferenceAverageProportionShotsOnTargetByMatch : \
+Promedio de las diferencias de proporciones de disparos al arco entre el \
+equipo local y visitante por partido .
+                    DifferenceMedianProportionShotsOnTargetByMatch : Mediana \
+de las diferencias de proporciones de disparos al arco entre el equipo local \
+y visitante por partido .
+                    HomeTeamAverageShotsOnTarget : Promedio de disparos al \
+arco realizados por el equipo local en todos sus partidos previos .
+                    AwayTeamAverageShotsOnTarget : Promedio de disparos al \
+arco realizados por el equipo visitante en todos sus partidos previos .
+                    HomeTeamMedianShotsOnTarget : Mediana de disparos al arco \
+realizados por el equipo local en sus partidos previos .
+                    AwayTeamMedianShotsOnTarget : Mediana de disparos al arco \
+realizados por el equipo visitante en sus partidos previos .
+                    DifferenceAverageShotsOnTargetHomeAway : Diferencia entre \
+el promedio de disparos al arco del equipo local y visitante .
+                    DifferenceMedianShotsOnTargetHomeAway : Diferencia entre \
+la mediana de disparos al arco del equipo local y visitante .
+                    DifferenceShotsOnTarget : Diferencia de disparos al arco \
+entre el equipo local y visitante en un partido (HST - AST) .
+                    HomeTeamAverageShotsOnTargetByMatch : Promedio de \
+disparos al arco del equipo local por partido .
+                    AwayTeamAverageShotsOnTargetByMatch : Promedio de \
+disparos al arco del equipo visitante por partido .
+                    HomeTeamMedianShotsOnTargetByMatch : Mediana de disparos \
+al arco del equipo local por partido .
+                    AwayTeamMedianShotsOnTargetByMatch : Mediana de disparos \
+al arco del equipo visitante por partido .
+                    DifferenceAverageShotsOnTargetByMatch : Promedio de las \
+diferencias de disparos al arco entre el equipo local y visitante por partido .
+                    DifferenceMedianShotsOnTargetByMatch : Mediana de las \
+diferencias de disparos al arco entre el equipo local y visitante por partido \
+.\
+\>", "Text",
+ CellChangeTimes->{{3.9345590845983543`*^9, 3.9345590891997356`*^9}, {
+   3.9345591323033447`*^9, 3.934559134558977*^9}, 
+   3.9345614549079475`*^9},ExpressionUUID->"6f90d24f-5c8a-0a4b-99b2-\
+5e79ff78968a"]
+},
+WindowSize->{571.8, 524.4},
+WindowMargins->{{284.4, Automatic}, {12, Automatic}},
+Magnification:>0.8 Inherited,
+FrontEndVersion->"14.1 for Microsoft Windows (64-bit) (July 23, 2024)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"de5494ac-21a1-eb47-a746-a444d7bd5876"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 1153, 33, 110, "Code",ExpressionUUID->"3d994c34-df98-9e42-8292-4c913766fd79"],
+Cell[1710, 55, 1258, 35, 82, "Code",ExpressionUUID->"63249a45-6557-0848-a875-38d75d16939c"],
+Cell[2971, 92, 1051, 33, 96, "Code",ExpressionUUID->"ab05e9c6-c9e6-204c-955e-4c297ebc2b3b"],
+Cell[4025, 127, 1104, 32, 110, "Code",ExpressionUUID->"aa327303-b259-9f49-95d8-0a294a8f4d85"],
+Cell[5132, 161, 32544, 990, 1726, "Code",ExpressionUUID->"7f629236-c8da-2041-b7a5-77e39e03988b"],
+Cell[37679, 1153, 3001, 76, 391, "Code",ExpressionUUID->"5a1b86b1-7c93-5044-b0d1-26ea58c2c3ef"],
+Cell[40683, 1231, 2253, 55, 321, "Code",ExpressionUUID->"f8631b6e-5559-0749-bd01-39d1d47497a5"],
+Cell[42939, 1288, 12728, 371, 812, "Code",ExpressionUUID->"57805998-81b6-c54b-9913-d7e481caaca3"],
+Cell[55670, 1661, 4524, 114, 433, "Code",ExpressionUUID->"81496073-1e83-7c4b-8c32-711adf070d4d"],
+Cell[CellGroupData[{
+Cell[60219, 1779, 2939, 49, 433, "Code",ExpressionUUID->"ba61aa0c-eb79-df4e-a8fc-a548f2b77934"],
+Cell[63161, 1830, 179, 3, 25, "Output",ExpressionUUID->"b3bde147-2b8e-d747-a94c-0493a6ab4a77"]
+}, Open  ]],
+Cell[63355, 1836, 6431, 107, 1478, "Text",ExpressionUUID->"6f90d24f-5c8a-0a4b-99b2-5e79ff78968a"]
+}
+]
+*)
+
